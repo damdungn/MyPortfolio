@@ -1,0 +1,265 @@
+/* src/styles/Projects.css */
+
+.projects-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 100px 24px 80px;
+}
+
+/* header */
+.projects-header {
+  margin-bottom: 56px;
+}
+
+.projects-header h1 {
+  font-size: clamp(32px, 6vw, 52px);
+  font-weight: 800;
+  color: #1a2e22;
+  line-height: 1.1;
+}
+
+.section-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #2c5f43;
+  margin-bottom: 8px;
+}
+
+/* section */
+.projects-section {
+  margin-bottom: 64px;
+}
+
+.projects-section-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #3d825c;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #c8ddd0;
+}
+
+.projects-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* card */
+.project-card {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 0;
+  border: 1.5px solid #479b67;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+  transition: box-shadow 0.25s, border-color 0.25s;
+}
+
+.project-card:hover {
+  box-shadow: 0 10px 35px rgba(53, 128, 87, 0.22);
+  border-color: #1c5636;
+}
+
+/* LEFT — logo */
+.card-logo-wrap {
+  position: relative;
+  background: #c9e9d4aa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  min-height: 120px;
+}
+
+.card-logo {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  transition: opacity 0.3s;
+}
+
+.card-logo-fallback {
+  width: 80px;
+  height: 90px;
+  border-radius: 50%;
+  background: #93c8a7;
+  color: #3a5f47;
+  font-size: 28px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  background: #1c5636;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card-logo-wrap:hover .card-overlay {
+  opacity: 1;
+}
+
+.card-arrow {
+  font-size: 36px;
+  color: #fff;
+  line-height: 1;
+  font-weight: 300;
+}
+
+.card-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.card-link {
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.08em;
+  border: 1px solid rgba(255,255,255,0.5);
+  padding: 3px 10px;
+  border-radius: 20px;
+  transition: background 0.2s;
+}
+
+.card-link:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+/* RIGHT — details */
+.card-details {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1a2e22;
+}
+
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.meta-item {
+  font-size: 13px;
+  color: #4a5e50;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.meta-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #7a9e87;
+}
+
+.card-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.skill-tag {
+  background: #eef2ec;
+  color: #2e4a38;
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid #c8ddd0;
+}
+
+/* card description */
+.card-description {
+  font-size: 13px;
+  color: #4a5e50;
+  line-height: 1.55;
+  margin-top: 4px;
+}
+
+/* Programs — program badge(s) */
+.card-programs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.program-badge {
+  display: inline-block;
+  background: #294735;
+  color: #bbe5ca;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 12px;
+  border-radius: 20px;
+}
+
+/* Hackathons — event name */
+.card-event-name {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #2c5f43;
+  background: #eef7f2;
+  border: 1px solid #c8ddd0;
+  width: fit-content;
+  padding: 3px 12px;
+  border-radius: 20px;
+}
+
+/* Coursework — course name */
+.card-course-name {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #7a5c1e;
+  background: #fdf5e6;
+  border: 1px solid #e8d5a8;
+  width: fit-content;
+  padding: 3px 12px;
+  border-radius: 20px;
+}
+
+/* mobile */
+@media (max-width: 600px) {
+  .project-card {
+    grid-template-columns: 80px 1fr;
+  }
+  .card-logo {
+    width: 44px;
+    height: 44px;
+  }
+  .card-details {
+    padding: 14px 16px;
+  }
+}

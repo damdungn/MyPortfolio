@@ -1,0 +1,180 @@
+/* src/styles/Experience.css — matches Home.css green theme */
+
+.exp-page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 100px 24px 80px;
+}
+
+/* ── Header ── */
+.exp-header {
+  margin-bottom: 40px;
+}
+
+.exp-section-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #2c5f43;
+  margin-bottom: 8px;
+}
+
+.exp-header h1 {
+  font-size: clamp(32px, 6vw, 52px);
+  font-weight: 800;
+  color: #1a2e22;
+  line-height: 1.1;
+}
+
+/* ── Intro paragraph ── */
+.exp-intro {
+  background: #e2f6ea;
+  border: 2px solid #3a7a58;
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-bottom: 56px;
+}
+
+.exp-intro p {
+  font-size: 15px;
+  line-height: 1.85;
+  color: #2e4a38;
+}
+
+/* highlighted keywords */
+.exp-intro mark {
+  background: none;
+  color: #32654a;
+  font-weight: 700;
+}
+
+/* ── Sections ── */
+.exp-section {
+  margin-bottom: 56px;
+}
+
+.exp-section-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #34704f;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #c8ddd0;
+}
+
+.exp-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ── Card — dark green style ── */
+.exp-card {
+  background: #3e7054;
+  border: 1.5px solid #3d6e52;
+  border-left: 5px solid #7edaaa;
+  border-radius: 8px;
+  padding: 18px 22px;
+  transition: box-shadow 0.25s, border-color 0.25s;
+}
+
+.exp-card:hover {
+  box-shadow: 0 6px 28px rgba(20, 50, 32, 0.35);
+  border-color: #6ebe94;
+}
+
+/* top row: role+org on left, date on right */
+.exp-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.exp-card-left {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.exp-card-role {
+  font-size: 15px;
+  font-weight: 700;
+  color: #e4f5ec;
+}
+
+.exp-card-org {
+  font-size: 12px;
+  font-weight: 600;
+  color: #98deb7;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: color 0.2s;
+  width: fit-content;
+}
+
+.exp-card-org:hover {
+  color: #c3f2d5;
+  text-decoration: underline;
+}
+
+.exp-card-org.no-link {
+  color: #98deb7;
+  cursor: default;
+}
+
+.exp-card-date {
+  font-size: 11px;
+  font-weight: 600;
+  color: #b2e4c6;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  background: rgba(110, 190, 148, 0.15);
+  border: 1px solid rgba(110, 190, 148, 0.35);
+  padding: 3px 10px;
+  border-radius: 20px;
+  align-self: flex-start;
+}
+
+/* bullet details */
+.exp-card-details {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.exp-card-details li {
+  font-size: 13px;
+  color: #d1f4df;
+  line-height: 1.6;
+  padding-left: 16px;
+  position: relative;
+}
+
+.exp-card-details li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: #5a9e75;
+  font-weight: 700;
+}
+
+/* ── Mobile ── */
+@media (max-width: 600px) {
+  .exp-card-top {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .exp-card-date {
+    align-self: flex-start;
+  }
+}

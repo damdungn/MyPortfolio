@@ -1,0 +1,57 @@
+/* src/styles/Navbar.css */
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  padding: 18px 40px;
+  background: rgba(28, 35, 30, 0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(139, 115, 85, 0.25);
+}
+
+nav a {
+  color: #b8a898;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 4px;
+  transition: color 0.25s;
+}
+
+/* animated underline on hover */
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 1px;
+  background: #8fbc8f; /* pine green accent */
+  transition: width 0.3s ease;
+}
+
+nav a:hover {
+  color: #e8ddd0; /* warm snow white */
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+/* active link — install react-router-dom's NavLink to use this */
+nav a.active {
+  color: #8fbc8f;
+}
+nav a.active::after {
+  width: 100%;
+}

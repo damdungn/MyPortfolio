@@ -1,0 +1,19 @@
+:root {
+  --bg: #94d9a22e;        /* main background */
+  --text: #f0ede8;      /* primary text */
+  --muted: #888;        /* secondary text */
+  --accent: #1c62b3;    /* your pop color — change this! */
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #f5f7f2;
+  color: #2e4a38;
+  font-family: sans-serif;
+}
