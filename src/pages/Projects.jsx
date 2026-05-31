@@ -28,8 +28,8 @@ const SECTIONS = [
         ],
       },
       {
-        title: 'TBD Project',
-        description: 'Short description of what this project does and why it matters.',
+        title: 'Food Bank Project',
+        description: 'An early warning AI system to predict the demand for food bank resources based on historical data and external factors, enabling proactive actions to mitigate shortages in supplies and staffing.',
         logo: '/logos/project2.png',
         year: '2026',
         team: '5 people',

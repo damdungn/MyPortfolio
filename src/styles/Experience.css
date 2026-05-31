@@ -12,7 +12,7 @@
 }
 
 .exp-section-label {
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -73,7 +73,7 @@
 
 /* ── Card — dark green style ── */
 .exp-card {
-  background: #3e7054;
+  background: #478160;
   border: 1.5px solid #3d6e52;
   border-left: 5px solid #7edaaa;
   border-radius: 8px;
@@ -103,13 +103,13 @@
 }
 
 .exp-card-role {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
   color: #e4f5ec;
 }
 
 .exp-card-org {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   color: #98deb7;
   text-decoration: none;
@@ -129,9 +129,9 @@
 }
 
 .exp-card-date {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
-  color: #b2e4c6;
+  color: #daf8e6;
   letter-spacing: 0.06em;
   white-space: nowrap;
   background: rgba(110, 190, 148, 0.15);
@@ -152,8 +152,8 @@
 }
 
 .exp-card-details li {
-  font-size: 13px;
-  color: #d1f4df;
+  font-size: 14px;
+  color: #ddffeb;
   line-height: 1.6;
   padding-left: 16px;
   position: relative;

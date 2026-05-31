@@ -8,8 +8,8 @@ import Experience from './pages/Experience'
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Navbar />        
+    <BrowserRouter basename="/MyPortfolio">
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/projects" element={<Projects />} />

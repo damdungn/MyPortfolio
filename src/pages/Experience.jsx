@@ -30,7 +30,7 @@ const ACADEMIC = [
     url: 'https://apps.ualberta.ca/catalogue/course/cmput/204',
     date: 'Jan 2026 – Apr 2026',
     details: [
-      'Led weekly lab sections for 30+ students in Algorithms I.',
+      'Led weekly lab sections for students in Algorithms I.',
       'Designed practice problems, graded assignments, and held weekly office hours.',
       'Received positive feedback for clear explanations of complexity analysis and proofs.',
     ],
@@ -60,13 +60,13 @@ const VOLUNTEER = [
     ],
   },
   {
-    role: 'Volunteer Role',    
-    org: 'Organisation Name',        
+    role: 'Computer Science TA',    
+    org: 'TeamUp Science',        
     url: null,
-    date: 'Month Year – Month Year', 
+    date: 'Feb 2026', 
     details: [
-      'Describe what you did here.',
-      'Add another bullet point.',
+      'Volunteer TA for the Interdisciplinary Science Competition (ISC) hosted by TeamUP Science.',
+      'Assisted high school teams with coding challenges and provided guidance on their solutions.',
     ],
   },
 ]
@@ -100,11 +100,11 @@ export default function Experience() {
         <p>
           My experience spans{' '}
           <mark>academic research</mark>, <mark>teaching</mark>, and{' '}
-          <mark>real-world service roles</mark>. I thrive at the intersection of
-          technical depth and human impact — whether{' '}
-          <mark>benchmarking large language models</mark>, mentoring students
-          through tricky algorithms, or mastering the art of the perfect{' '}
-          <mark>bubble tea</mark>. Every role has sharpened a different edge.
+          <mark>volunteer and social service roles</mark>. All my experiences involved mainly <mark>{' '}
+            collaborating with others</mark> and <mark> communication</mark> which I believe are one of the most important social skills{' '}.
+            I enjoy working with others to solve problems, and I find that collaboration often leads {' '}
+            to better outcomes than working alone. Moreover, working in many different environment in different {' '}
+            role has shaped my <mark>adaptability</mark> and <mark>time management skills</mark>. 
         </p>
       </section>
 
