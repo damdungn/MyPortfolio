@@ -1,4 +1,5 @@
 // src/pages/Home.jsx
+import { Link } from 'react-router-dom'
 import '../styles/Home.css'
 import avatar from '../../public/avatar.JPG'
 
@@ -24,9 +25,9 @@ export default function Home() {
             I'm interested in Computer Visions, Machine Learning, and Software Development. I am passionate about integrating AI into multiple applications to create innovative and impactful solutions. My strength lies in problem-solving skills, math reasoning, data analysis and quick learning.
             Currently looking for exciting opportunities.
           </p>
-          <a href="MyPortfolio/resume.pdf" className="btn-resume" target="_blank" rel="noopener">
-            ⬇ DOWNLOAD RESUME
-          </a>
+          <Link to="/resume" className="btn-resume">
+            VIEW RESUME
+          </Link>
           <h2>LITTLE FUN FACTS</h2>
           <p>
             I am belong to a minority group called the Tay, which is the second largest ethnic group in Vietnam. My hometown is a small mountainous province called Cao Bang, which is famous for its stunning landscapes and rich cultural heritage. 
