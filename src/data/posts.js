@@ -2,10 +2,31 @@ import upper from '../../public/upper.JPG'
 import upper2 from '../../public/upper2.JPG'
 import upper3 from '../../public/upper3.jpg'
 import llm from '../../public/llm.jpeg'
+import proj1 from '../../public/proj1.png'
+import proj2 from '../../public/proj2.png'
+import proj3 from '../../public/proj3.png'
+import proj4 from '../../public/proj4.png'
+
 
 export const posts = [
   {
     id: 1,
+    title: "My First 4 weeks at AI4Good Lab as a Research Alumni",
+    date: "2026-06-07",
+    content: [
+      { type: 'p', value: "The first four weeks at ==AI4Good Lab as a Research Alumni== have been incredibly rewarding. I learned a lot about the field of AI for Good and had the opportunity to attend many interesting talks and work on some exciting projects. It is crazy to think that just in 4 weeks, I learned not everything but almost everything from **neural networks, CNN, RNN, NLP, transformers to Reinforcement Learning**!" },
+      { type: 'p', value: "4 projects that my e1 team worked on (in incredibly short time of 3 weeks bonus 5-minute presentations):" },
+      { type: 'list', items: [
+        "Do socioeconomic indicators correlate with violence against women? - **PCA and K-Means learning**",
+        "Cassava Leaf Disease Classification - **ImageNet + EfficientNet**",
+        "Toxic Comments Classification Challenge - **DistilBERT**",
+        "Training a Robotic Arm with Reinforcement Learning - **Gymnasium PandaReachDense + SAC/TQC/PPO**"
+      ]},
+    ],
+    images: [proj3, proj1, proj2, proj4],
+  },
+  {
+    id: 2,
     title: "My First Experience at UpperBound 2026",
     date: "2026-05-22",
     content: [
@@ -19,7 +40,7 @@ export const posts = [
     images: [upper, upper2, upper3],
   },
   {
-    id: 2,
+    id: 3,
     title: "My First Experience as an researcher at UR2PHD under the supervision of Professor Barbosa",
     date: "2025-12-22",
     content: [
