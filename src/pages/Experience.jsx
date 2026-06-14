@@ -9,9 +9,9 @@ const ACADEMIC = [
     url: 'https://www.ai4goodlab.com',
     date: 'May 2026 – Present',
     details: [
-      'Developing a computer-vision solution for a social-good problem under expert mentorship.',
+      'Developing a AI/ML solution for a social good problem under expert mentorship.',
       'Collaborating with a team of 5 across data collection, model training, and deployment.',
-      'Applying ML best practices including cross-validation, ablation studies, and bias auditing.',
+      'Working on a project to predict supply and demand for food bank resources based on historical data and external factors such as weather and economic indicators, enabling proactive actions to mitigate shortages in supplies and staffing.',
     ],
   },
   {
@@ -20,7 +20,7 @@ const ACADEMIC = [
     url: 'https://www2.su.ualberta.ca/services/infolink/tutor/registry/',
     date: 'Jan 2026 – Present',
     details: [
-      'Provide one-on-one tutoring for undergraduate students across computing science courses.',
+      'Provide one-on-one tutoring for undergraduate students across computing science, statistics and mathematics courses.',
       'Help students build intuition for algorithms, data structures, and software design.',
     ],
   },

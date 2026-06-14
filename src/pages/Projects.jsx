@@ -6,6 +6,7 @@ import calobro from '../../logos/calobro.png'
 import flag from '../../logos/flagrant.jpg'
 import neuro from '../../logos/neuro-dash.jpg'
 import chicks from '../../logos/chicks-events.jpeg'
+import logos from '../../logos/logo-removebg.png'
 
 // ✏️ Replace with your actual projects
 const SECTIONS = [
@@ -13,6 +14,20 @@ const SECTIONS = [
     id: 'programs',
     label: 'Programs',
     projects: [
+      {
+        title: 'Food Bank Project',
+        description: 'An early warning AI system to predict supply and demand for food bank resources based on historical data and external factors such as weather and economic indicators, enabling proactive actions to mitigate shortages in supplies and staffing.',
+        logo: logos,
+        year: '2026',
+        team: '5 people',
+        skills: ['Python', 'Prophet', 'AI', 'ML', 'Random Forest', 'Data Analysis', 'React', 'FastAPI'],
+        programs: ['AI4Good Lab'],
+        results: 'TBD',
+        links: [
+          { label: 'GitHub', url: 'https://github.com/damdungn/FoodBank_e3' },
+          { label: 'Link to App', url: 'https://food-bank-forecast.vercel.app/' },
+        ],
+      },
       {
         title: 'Evaluating LLM Performance on the Correction of Syntactic & Semantic SQL Errors in the Spider Dataset.',
         description: 'Benchmarked GPT-4 and Llama 3 on auto-correcting SQL queries, comparing accuracy across error categories.',
@@ -23,21 +38,6 @@ const SECTIONS = [
         programs: ['UR2PhD'],
         results: 'Submitted to UR2PhD symposium',
         links: [
-          { label: 'GitHub', url: 'https://github.com/yourusername/project' },
-          { label: 'Paper', url: 'https://yourproject.com' },
-        ],
-      },
-      {
-        title: 'Food Bank Project',
-        description: 'An early warning AI system to predict the demand for food bank resources based on historical data and external factors, enabling proactive actions to mitigate shortages in supplies and staffing.',
-        logo: '/logos/project2.png',
-        year: '2026',
-        team: '5 people',
-        skills: ['Python', 'Computer Vision', 'AI', 'ML', 'Data Analysis'],
-        programs: ['AI4Good Lab'],
-        results: 'TBD',
-        links: [
-          { label: 'GitHub', url: 'https://github.com/yourusername/project2' },
         ],
       },
     ],

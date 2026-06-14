@@ -6,9 +6,29 @@ import proj1 from '../../public/proj1.png'
 import proj2 from '../../public/proj2.png'
 import proj3 from '../../public/proj3.png'
 import proj4 from '../../public/proj4.png'
-
+import feeds from '../../public/FEEDS.png'
+import logos from '../../logos/logo-removebg.png'
 
 export const posts = [
+  {
+    id: 1,
+    title: "My first 2 weeks working on Food Bank Project (We achieved a lot in just 2 weeks!)",
+    date: "2026-06-14",
+    content: [
+      { type: 'p', value: "The last 2 weeks have been incredibly productive for our team working on the ==Food Bank Project==! It was exhausting but truly rewarding!" },
+      { type: 'p', value: "To sum up, this is what we have accomplished:" },
+      { type: 'list', items: [
+        "Visited **Edmonton Food Bank** and learned about their operations and challenges => this is where we got the idea for our project!",
+        "Had a meeting with the **Campus Food Bank** director and got a lot of insights about the food bank's operations (and asked for data!)",
+        "Worked on a **Prophet + Random Forest** model to predict the supply and demand for provincial food bank => we achieved a ==80% accuracy==",
+        "Built a model for **regional FB (Red Deer)** using Prophet to predict monthly hampers demands => We achieved a ==82.3% accuracy==",
+        "FOund out that our **5 external features** such as AISH caseload, CPI, etc explained the provincial model also explained the regional model => this is a great sign that our model is ==generalizable== and can be applied to other regions in Alberta!",
+        "Developed a **full-stack web application** to visualize the data and predictions for the food bank (using React, and Python/FastAPI)",
+        "Our project name is ==FEEDS== (Forecasting Engine for Estimating Demand and Supply)"
+      ]},
+    ],
+    images: [feeds, logos],
+  },
   {
     id: 1,
     title: "My First 4 weeks at AI4Good Lab as a Research Alumni",
