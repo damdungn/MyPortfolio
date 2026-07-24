@@ -1,4 +1,152 @@
+/* ============ FIXED DAISY MEADOW BACKGROUND ============
+   Prefixed "blog-" so it can't collide with Home.css, which is loaded
+   globally alongside this file and already defines .daisy-scatter /
+   .daisy-mini / .meadow-ground for the Home page's own daisy scene. */
+
+.blog-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.blog-bg-sky {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #f3f7d8 0%, #dcefc4 55%, #b7dd8e 100%);
+}
+
+/* Daisies scattered across the whole page, not just the bottom edge —
+   real petal shapes (mirroring Home.css's .daisy construction), just
+   miniature and static (no sway) since these are background texture. */
+.blog-daisy-scatter {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.blog-daisy-spot {
+  position: absolute;
+  opacity: 0.55;
+}
+.blog-mini-daisy {
+  position: relative;
+}
+.blog-mini-petal {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 28%;
+  height: 50%;
+  margin-left: -14%;
+  background: #fff;
+  border-radius: 50%;
+  transform-origin: center bottom;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+}
+.blog-mini-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30%;
+  height: 30%;
+  margin-left: -15%;
+  margin-top: -15%;
+  border-radius: 50%;
+  background: #f2c230;
+}
+
+.blog-ground {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 260px;
+  z-index: 2;
+}
+.blog-ground svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.blog-ground svg path {
+  fill: #8fc15e;
+  opacity: 0.9;
+}
+
+/* Field of full-size daisies standing on the ground, same construction as
+   Home.css's .daisy (stalk + 8 swaying petals + center), prefixed here so
+   it doesn't collide with Home.css's own .daisy/.petal/.center rules. */
+.blog-field-row {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 220px;
+  z-index: 3;
+}
+.blog-field-daisy {
+  position: absolute;
+  bottom: 0;
+  width: 48px;
+  height: 150px;
+  transform-origin: bottom center;
+}
+.blog-field-sway {
+  width: 100%;
+  height: 100%;
+  transform-origin: bottom center;
+  animation: blog-field-sway 3.4s ease-in-out infinite;
+}
+@keyframes blog-field-sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+.blog-field-stalk {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  height: 100px;
+  margin-left: -2px;
+  background: #4c7a2e;
+}
+.blog-field-petals {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 48px;
+  height: 48px;
+  margin-left: -24px;
+}
+.blog-field-petal {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 28%;
+  height: 50%;
+  margin-left: -14%;
+  background: #fff;
+  border-radius: 50%;
+  transform-origin: center bottom;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.08);
+}
+.blog-field-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  margin-left: -9px;
+  margin-top: -60px;
+  border-radius: 50%;
+  background: #f2c230;
+}
+
+/* ============ PAGE CONTENT ============ */
+
 .blog-page {
+  position: relative;
+  z-index: 10;
   max-width: 720px;
   margin: 0 auto;
   padding: 72px 24px 80px;
@@ -7,9 +155,10 @@
 .blog-heading {
   font-size: clamp(32px, 6vw, 52px);
   font-weight: 800;
-  color: #1a2e22;
+  color: #295f1e;
   line-height: 1.1;
   margin-bottom: 56px;
+  text-shadow: 0 2px 14px rgba(255, 255, 255, 0.5);
 }
 
 .blog-list {
@@ -19,29 +168,29 @@
 }
 
 .blog-post {
-  border: 2px solid #478263;
+  border: 8px solid #3e840f52;
   padding: 24px;
-  background-color: #f0fff6;
+  background-color: rgba(248, 252, 238, 0.493);
+  backdrop-filter: blur(6px);
   border-radius: 8px;
-
+  box-shadow: 0 16px 40px rgba(51, 66, 28, 0.14);
 }
 
 .blog-post-title {
   font-size: 22px;
   font-weight: 700;
-  color: #1a2e22;
+  color: #2b3d17;
   margin-bottom: 6px;
-  background: #82cfa6;
+  background: #f2c130c9;
   display: inline-block;
   padding: 4px 12px;
   border-radius: 4px;
-
 }
 
 .blog-post-date {
   display: block;
   font-size: 15px;
-  color: #195e32;
+  color: #4c7a2e;
   font-weight: 700;
   letter-spacing: 0.05em;
   margin-bottom: 16px;
@@ -49,7 +198,7 @@
 
 .blog-post-content {
   font-size: 15px;
-  color: #2e4a38;
+  color: #33421c;
   line-height: 1.85;
   margin-bottom: 20px;
 }
@@ -63,13 +212,13 @@
 
 .blog-post-list li {
   font-size: 15px;
-  color: #2e4a38;
+  color: #33421c;
   line-height: 1.7;
 }
 
 mark {
-  background: #c8f0d8;
-  color: #1a3d28;
+  background: #f2c130b6;
+  color: #2b3d17;
   padding: 1px 4px;
   border-radius: 3px;
 }
@@ -87,5 +236,12 @@ mark {
   border-radius: 6px;
   object-fit: cover;
   flex-shrink: 0;
-  border: 1.5px solid #dde8e1;
+  border: 1.5px solid #cfe0b4;
+}
+
+/* mobile */
+@media (max-width: 600px) {
+  .blog-post {
+    padding: 18px;
+  }
 }

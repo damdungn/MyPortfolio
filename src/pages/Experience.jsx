@@ -1,6 +1,6 @@
 // src/pages/Experience.jsx
 import '../styles/Experience.css'
-
+import avatar from '../../public/exp.png'
 
 const ACADEMIC = [
   {
@@ -60,10 +60,10 @@ const VOLUNTEER = [
     ],
   },
   {
-    role: 'Computer Science TA',    
-    org: 'TeamUp Science',        
+    role: 'Computer Science TA',
+    org: 'TeamUp Science',
     url: null,
-    date: 'Feb 2026', 
+    date: 'Feb 2026',
     details: [
       'Volunteer TA for the Interdisciplinary Science Competition (ISC) hosted by TeamUP Science.',
       'Assisted high school teams with coding challenges and provided guidance on their solutions.',
@@ -85,60 +85,115 @@ const PARTTIME = [
   },
 ]
 
-export default function Experience() {
-  return (
-    <main className="exp-page">
+// Slow-drifting clouds, same idea as Home.css's beach scene
+const EXP_CLOUDS = [
+  { top: 10, left: 14, duration: 24, delay: 0 },
+  { top: 20, left: 46, duration: 30, delay: 5 },
+  { top: 6, left: 68, duration: 22, delay: 2 },
+]
 
-      {/* Header */}
-      <div className="exp-header">
-        <p className="exp-section-label">Background</p>
-        <h1>Experience</h1>
+function ExperienceBackground() {
+  return (
+    <div className="exp-bg">
+      <div className="exp-bg-sky" />
+      <div className="exp-sun" />
+
+      <div className="exp-cloud-layer">
+        {EXP_CLOUDS.map((c, i) => (
+          <span
+            key={i}
+            className="exp-cloud"
+            style={{
+              top: `${c.top}%`,
+              left: `${c.left}%`,
+              animationDuration: `${c.duration}s`,
+              animationDelay: `${c.delay}s`,
+            }}
+          />
+        ))}
       </div>
 
-      {/* Intro */}
-      <section className="exp-intro">
-        <p>
-          My experience spans{' '}
-          <mark>academic research</mark>, <mark>teaching</mark>, and{' '}
-          <mark>volunteer and social service roles</mark>. All my experiences involved mainly <mark>{' '}
-            collaborating with others</mark> and <mark> communication</mark> which I believe are one of the most important social skills{' '}.
-            I enjoy working with others to solve problems, and I find that collaboration often leads {' '}
-            to better outcomes than working alone. Moreover, working in many different environment in different {' '}
-            role has shaped my <mark>adaptability</mark> and <mark>time management skills</mark>. 
-        </p>
-      </section>
+      <div className="exp-wave exp-wave-far">
+        <svg viewBox="0 0 1440 200" preserveAspectRatio="none">
+          <path d="M0,80 C240,140 480,20 720,60 C960,100 1200,20 1440,70 L1440,200 L0,200 Z" />
+        </svg>
+      </div>
+      <div className="exp-wave exp-wave-mid">
+        <svg viewBox="0 0 1440 200" preserveAspectRatio="none">
+          <path d="M0,80 C240,140 480,20 720,60 C960,100 1200,20 1440,70 L1440,200 L0,200 Z" />
+        </svg>
+      </div>
+      <div className="exp-wave exp-wave-near">
+        <svg viewBox="0 0 1440 200" preserveAspectRatio="none">
+          <path d="M0,80 C240,140 480,20 720,60 C960,100 1200,20 1440,70 L1440,200 L0,200 Z" />
+        </svg>
+      </div>
+    </div>
+  )
+}
 
-      {/* Academic */}
-      <section className="exp-section">
-        <h2 className="exp-section-title">Academic &amp; Research</h2>
-        <div className="exp-list">
-          {ACADEMIC.map((item, i) => (
-            <ExperienceCard key={i} item={item} />
-          ))}
+export default function Experience() {
+  return (
+    <>
+      <ExperienceBackground />
+
+      <main className="exp-page">
+
+        {/* LEFT — scrollable card list, 2/3 width */}
+        <div className="exp-scroll-col">
+
+          {/* Academic */}
+          <section className="exp-section">
+            <h2 className="exp-section-title">Academic &amp; Research</h2>
+            <div className="exp-list">
+              {ACADEMIC.map((item, i) => (
+                <ExperienceCard key={i} item={item} />
+              ))}
+            </div>
+          </section>
+
+          {/* Volunteer */}
+          <section className="exp-section">
+            <h2 className="exp-section-title">Volunteer</h2>
+            <div className="exp-list">
+              {VOLUNTEER.map((item, i) => (
+                <ExperienceCard key={i} item={item} />
+              ))}
+            </div>
+          </section>
+
+          {/* Part-time / Non-academic */}
+          <section className="exp-section">
+            <h2 className="exp-section-title">Part-time &amp; Non-academic</h2>
+            <div className="exp-list">
+              {PARTTIME.map((item, i) => (
+                <ExperienceCard key={i} item={item} />
+              ))}
+            </div>
+          </section>
+
         </div>
-      </section>
 
-      {/* Volunteer */}
-      <section className="exp-section">
-        <h2 className="exp-section-title">Volunteer</h2>
-        <div className="exp-list">
-          {VOLUNTEER.map((item, i) => (
-            <ExperienceCard key={i} item={item} />
-          ))}
+        {/* RIGHT — fixed title + intro + image, 1/3 width */}
+        <div className="exp-side-panel">
+          <div className="exp-header">
+            <p className="exp-section-label">Background</p>
+            <h1>Experience</h1>
+          </div>
+          <p>
+              My experience spans{' '}
+              <mark>academic research</mark>, <mark>teaching</mark>, and{' '}
+              <mark>volunteer and social service roles</mark>. All my experiences involved mainly <mark>{' '}
+                collaborating with others</mark> and <mark> communication</mark> which I believe are one of the most important social skills{' '}.
+                I enjoy working with others to solve problems, and I find that collaboration often leads {' '}
+                to better outcomes than working alone. Moreover, working in many different environment in different {' '}
+                role has shaped my <mark>adaptability</mark> and <mark>time management skills</mark>.
+          </p>
+          <img src={avatar} alt="Dam Dung Nguyen Mong" className="exp-side-image" />
         </div>
-      </section>
 
-      {/* Part-time / Non-academic */}
-      <section className="exp-section">
-        <h2 className="exp-section-title">Part-time &amp; Non-academic</h2>
-        <div className="exp-list">
-          {PARTTIME.map((item, i) => (
-            <ExperienceCard key={i} item={item} />
-          ))}
-        </div>
-      </section>
-
-    </main>
+      </main>
+    </>
   )
 }
 

@@ -1,5 +1,5 @@
 // src/App.jsx
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { HashRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import Projects from './pages/Projects'
@@ -9,7 +9,7 @@ import Resume from './pages/Resume'
 
 export default function App() {
   return (
-    <BrowserRouter basename="/MyPortfolio">
+    <HashRouter>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -18,6 +18,6 @@ export default function App() {
         <Route path="/experience" element={<Experience />} />
         <Route path="/resume" element={<Resume />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   )
 }

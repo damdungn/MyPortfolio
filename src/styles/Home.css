@@ -1,321 +1,1051 @@
 /* src/styles/Home.css */
 
-.hero {
-  text-align: center;
-  padding: 130px 24px 80px;
-  background-image: url('../../public/bg.webp');
-  background-size: cover;
-  background-position: center;
-  position: relative;
+html {
+  scroll-behavior: smooth;
 }
 
-/* dark overlay so text stays readable over any bg image */
-.hero::before {
-  content: '';
+* {
+  box-sizing: border-box;
+}
+
+.home {
+  overflow-x: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+
+/* ============ SHARED SCENE FRAME ============ */
+.scene {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 24px;
+}
+
+.scene-sky {
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.35);
+  z-index: 0;
 }
 
-/* make sure text sits above the overlay */
-.hero > * {
+/* Panels are translucent by default; each section tints them to match its
+   own scene instead of every panel looking like the same white card. */
+.panel {
   position: relative;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(14px);
+  border-radius: 18px;
+  padding: 40px 36px;
+  max-width: 640px;
+  width: 100%;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+  color: #22303a;
 }
 
-.hero-sub {
-  font-size: 20px;
-  color: #3d5a47;
-  letter-spacing: 0.1em;
-  margin-bottom: 8px;
-  font-weight: 600;
+.panel h2 {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0 0 18px;
+}
+
+.panel h2:not(:first-child) {
+  margin-top: 30px;
+}
+
+/* ============ 1. MUSHROOM HERO ============ */
+.mushroom-scene {
+  color: #0f2417;
+}
+
+.hills {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 300px;
+}
+.hills svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* back to front: lighter + more muted as they recede, darker + more saturated up close */
+.hills.far {
+  height: 300px;
+  z-index: 1;
+}
+.hills.far svg path {
+  fill: #a0c29b;
+  opacity: 0.70;
+}
+
+.hills.mid {
+  height: 260px;
+  z-index: 2;
+}
+.hills.mid svg path {
+  fill: #8fb08a;
+  opacity: 0.85;
+}
+
+.hills.near {
+  height: 220px;
+  z-index: 3;
+}
+.hills.near svg path {
+  fill: #4f7a52;
+  opacity: 0.95;
+}
+
+.treeline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 140px;
+  z-index: 4;
+}
+.tree {
+  position: absolute;
+  bottom: 0;
+  width: 26px;
+  background: #345e42;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.fog {
+  position: absolute;
+  left: -20%;
+  right: -20%;
+  bottom: 66px;
+  height: 60px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  filter: blur(8px);
+  z-index: 5;
+}
+
+.mushroom-row {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 130px;
+  z-index: 6;
+}
+.mushroom {
+  position: absolute;
+  bottom: 0;
+  width: 60px;
+  height: 90px;
+  transform-origin: bottom center;
+}
+.mushroom .stem {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 14px;
+  height: 36px;
+  margin-left: -7px;
+  background: #f4ebd9;
+  border-radius: 4px 4px 2px 2px;
+}
+.mushroom .cap {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  width: 56px;
+  height: 32px;
+  margin-left: -28px;
+  border-radius: 50% 50% 8px 8px / 70% 70% 20% 20%;
+}
+.mushroom.fly-agaric .cap {
+  background: #d9432e;
+}
+.mushroom.brown .cap {
+  background: #8a5a3c;
+}
+.mushroom.tan .cap {
+  background: #c69a6d;
+}
+.mushroom .dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff;
+}
+.dot.d1 { top: 6px; left: 12px; }
+.dot.d2 { top: 3px; left: 26px; }
+.dot.d3 { top: 8px; left: 40px; }
+
+.scene-content {
+  position: relative;
+  z-index: 6;
+  text-align: center;
 }
 
 .hero-name {
-  font-size: clamp(40px, 8vw, 80px);
-  font-weight: 800;
-  color: #1a2e22;
-  margin-bottom: 15px;
-}
-
-.hero-name span {
-  color: #4a9b6f; 
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(40px, 7vw, 78px);
+  font-weight: 400;
+  letter-spacing: -0.5px;
+  color: #0f2417;
+  margin-bottom: 14px;
+  text-shadow: 0 2px 16px rgba(255, 255, 255, 0.55);
 }
 
 .hero-tagline {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 600;
   letter-spacing: 0.12em;
-  color: #3d5a47;
-  margin-bottom: 40px;
+  color: #1c3524;
+  opacity: 0.85;
+  margin-bottom: 32px;
 }
 
 .hero-scroll {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 50px;
-  height: 50px;
-  border: 3px solid #3a7a58;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  font-size: 18px;
-  background: #3a7a58;
+  background: #2f5b3c;
   color: #fff;
-  transition: background 0.2s, color 0.2s;
+  font-size: 20px;
+  text-decoration: none;
+  transition: background 0.2s;
+  cursor: pointer;
 }
-
 .hero-scroll:hover {
-  background: #26573b;
-  color: #fff;
+  background: #1e3f28;
 }
 
-/* ABOUT */
-.about {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
+/* ============ 2. WATERFALL / MOUNTAIN ABOUT ============ */
+.waterfall-scene {
+  color: #1c2a3a;
+}
+
+.mountain {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.mountain svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.mountain.far { height: 260px; z-index: 1; }
+.mountain.far svg polygon { fill: #a9d6c0; opacity: 0.7; }
+.mountain.mid { height: 220px; z-index: 2; }
+.mountain.mid svg polygon { fill: #7cb8a2; }
+.mountain.near { height: 160px; z-index: 4; }
+.mountain.near svg polygon { fill: #417a5d; }
+
+/* Three waterfalls spanning the full height of the scene, top to bottom */
+.waterfalls {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.waterfall {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+  border-radius: 0 0 8px 8px;
+}
+
+/* Bigger, lighter waterfall in the middle */
+.waterfall-center {
+  left: 50%;
+  width: 150px;
+  margin-left: -60px;
+  z-index: 2;
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+}
+
+/* Narrower, darker waterfalls on either side */
+.waterfall-side {
+  width: 120px;
+  z-index: 1;
+  filter: brightness(0.90) saturate(1.15);
+  box-shadow: 0 0 24px rgba(193, 214, 227, 0.584);
+}
+.waterfall-left {
+  left: 39%;
+  margin-left: -50px;
+}
+.waterfall-right {
+  left: 61%;
+  margin-left: -50px;
+}
+
+/* Vertical water-stream lines (base texture) with an animated downward
+   highlight pass layered on top to sell the falling motion */
+.waterfall-flow {
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      #f9ffff 0 2px,
+      #dff8ff 2px 5px,
+      #bfefff 5px 9px,
+      #97dff9 9px 13px
+    ),
+    radial-gradient(
+      ellipse at center,
+      rgba(255,255,255,.55),
+      transparent 70%
+    );
+}
+.waterfall-mist {
+  position: absolute;
+  bottom: -10px;
+  left: -30px;
+  right: -30px;
+  height: 50px;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.9), transparent 70%);
+  filter: blur(4px);
+}
+
+/* Drifting fog band, same treatment as the mushroom hero scene */
+.waterfall-scene .fog {
+  position: absolute;
+  left: -20%;
+  right: -20%;
+  bottom: 30%;
+  height: 60px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  filter: blur(8px);
+  z-index: 4;
+}
+
+/* Story panel (left) and Fun Facts panel (right), waterfall visible between them */
+.waterfall-panels {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
   gap: 48px;
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 72px 24px 24px; 
-  align-items: start;
-  background: #f5f7f2;
+  max-width: 1120px;
+  width: 100%;
 }
 
-.about h2 {
-  font-size: 16px;
-  font-weight: 700;
-  color: #3a7a58;
-  letter-spacing: 0.12em;
-  margin-bottom: 20px;
-  text-transform: uppercase;
+.waterfall-panels .panel {
+  max-width: 480px;
+  margin: 0;
 }
 
-/* LEFT */
-.about-story p {
-  color: #4a5e50;
-  font-size: 15px;
+/* Blue-tinted, translucent, framed with the pattern.png border */
+.story-panel,
+.funfact-panel {
+  background: rgba(238, 246, 255, 0.541);
+  border: 14px solid transparent;
+  border-image-source: url('/pattern.png');
+  border-image-slice: 48;
+  border-image-width: 14px;
+  border-image-repeat: round;
+  border-image-outset: 0;
+}
+
+.story-panel {
+  overflow: hidden;
+  text-align: right;
+}
+.story-avatar {
+  float: left;
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin: 0 20px 12px 0;
+  shape-outside: margin-box;
+}
+
+.story-bg {
+  flex-shrink: 0;
+  width: 400px;
+  height: 200px;
+  display: block;
+  object-fit: cover;
+  border: 1px solid #417a6a;
+  box-shadow: 0 8px 24px rgba(65, 122, 113, 0.3);
+  margin-top: 10px;
+}
+
+.story-panel h2 {
+  color: #2c4361;
+}
+.story-panel p {
+  color: #21324a;
+  font-size: 17px;
   line-height: 1.8;
   margin-bottom: 15px;
 }
-
 .btn-resume {
+  clear: both;
   display: inline-block;
-  background: #3a7a58;
+  background: #2c4361;
   color: #fff;
   padding: 10px 20px;
   border-radius: 4px;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.05em;
+  margin-bottom: 10px;
+  text-decoration: none;
   transition: background 0.2s;
-  margin-bottom: 25px;
 }
-
 .btn-resume:hover {
-  background: #2e6a48;
+  background: #1d2f47;
 }
 
-/* CENTER */
-.about-photo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 300px;
+.funfact-panel {
+  text-align: left;
+  align-self: center;
+}
+.funfact-panel h2 {
+  color: #2c4361;
+}
+.funfact-panel p {
+  color: #21324a;
+  font-size: 17px;
+  line-height: 1.8;
+  margin: 0;
 }
 
-.about-photo img {
-  width: 270px;
-  height: 330px;
-  object-fit: cover;
-  border-radius: 4px;
+/* ============ 3. DAISY EXPERIENCE / EDUCATION ============ */
+.daisy-scene {
+  color: #33421c;
+}
+
+/* Sparse daisies scattered across the whole scene for background depth */
+.daisy-scatter {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.daisy-mini {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 70%;
+  background: radial-gradient(circle, #ffffff 34%, #f2c230 38%, transparent 72%);
+  opacity: 0.60;
+  filter: blur(0.2px);
+}
+
+.meadow-ground {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 360px;
+  z-index: 1;
+}
+.meadow-ground svg {
+  width: 100%;
+  height: 100%;
   display: block;
-  border: 3px solid #3a7a58;
-  box-shadow: 0 8px 32px rgba(74, 155, 111, 0.15);
-  margin-bottom: 24px;
+}
+.meadow-ground svg path {
+  fill: #8fc15e;
 }
 
-.about-photo h2 {
+.daisy-row {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 240px;
+  z-index: 2;
+}
+.daisy {
+  position: absolute;
+  bottom: 0;
+  width: 52px;
+  height: 160px;
+  transform-origin: bottom center;
+}
+.daisy-sway {
+  width: 100%;
+  height: 100%;
+  transform-origin: bottom center;
+  animation: daisy-sway 3.4s ease-in-out infinite;
+}
+@keyframes daisy-sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+.daisy .stalk {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  height: 110px;
+  margin-left: -2px;
+  background: #4c7a2e;
+}
+.daisy .petals {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 52px;
+  height: 52px;
+  margin-left: -26px;
+}
+.daisy .petal {
+  position: absolute;
+  top: 18px;
+  left: 21px;
+  width: 10px;
+  height: 26px;
+  background: #fff;
+  border-radius: 50%;
+  transform-origin: center 26px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.08);
+}
+.daisy .center {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-left: -10px;
+  border-radius: 50%;
+  background: #f2c230;
+}
+
+/* Experience (left) and Education (right), side by side */
+.exp-edu-row {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+  max-width: 1120px;
   width: 100%;
 }
-
-.about-photo .exp-list {
-  width: 100%;
+.exp-edu-row .panel {
+  max-width: 500px;
+  margin: 0;
 }
 
-/* RIGHT */
-.about-info table {
+/* Green-tinted, translucent panels matching the meadow */
+.exp-panel,
+.edu-panel {
+  background: rgba(254, 255, 253, 0.165);
+  border: 5px solid rgba(118, 135, 33, 0.425);
+}
+
+.exp-panel h2,
+.edu-panel h2 {
+  color: #35521f;
+}
+
+.exp-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.exp-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(76, 122, 46, 0.25);
+}
+.exp-item:last-child {
+  border-bottom: none;
+}
+.daisy-bullet {
+  flex-shrink: 0;
+  margin-top: 4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #f2c230;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6), 0 0 0 4px rgba(76, 122, 46, 0.25);
+}
+.exp-role {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1f2e12;
+}
+.exp-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+.exp-org {
+  font-size: 15px;
+  color: #345c1e;
+  font-weight: 500;
+  text-decoration: none;
+}
+.exp-org:hover {
+  text-decoration: underline;
+}
+.exp-date {
+  font-size: 14px;
+  color: #4d6b38;
+  font-weight: 500;
+}
+.exp-date::before {
+  content: '·';
+  margin-right: 6px;
+  color: #7a9a5e;
+}
+
+.edu-table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 26px;
 }
-
-.about-info td {
-  padding: 10px 4px;
-  font-size: 14px;
-  border-bottom: 1px solid #dde8e1;
+.edu-table td {
+  padding: 9px 4px;
+  font-size: 16px;
+  border-bottom: 1px solid rgba(76, 122, 46, 0.25);
 }
-
-.about-info td:first-child {
-  color: #3a7a58;
-  width: 80px;
+.edu-table td:first-child {
+  color: #35521f;
+  width: 100px;
   font-weight: 600;
   text-transform: uppercase;
-  font-size: 12px;
-  letter-spacing: 0.08em;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+}
+.edu-table td:last-child {
+  color: #1e2c12;
+  font-weight: 500;
 }
 
-.about-info td:last-child {
-  color: #2e4a38;
+/* ============ 4. BEACH CONTACT ============ */
+.beach-scene {
+  color: #0b2b3c;
+}
+
+.beach-sun {
+  position: absolute;
+  top: 6%;
+  left: 8%;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: #ffd36e;
+  box-shadow: 0 0 110px 55px rgba(255, 211, 110, 0.35);
+  z-index: 1;
+}
+
+/* Floating clouds, each drifting slowly and looping at its own pace */
+.cloud-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.cloud {
+  position: absolute;
+  width: 140px;
+  height: 46px;
+  background: rgba(255, 255, 255, 0.88);
+  border-radius: 999px;
+  box-shadow:
+    36px -22px 0 -6px rgba(255, 255, 255, 0.88),
+    70px -8px 0 -10px rgba(255, 255, 255, 0.88),
+    30px 6px 0 -8px rgba(255, 255, 255, 0.8);
+  filter: blur(0.2px);
+  animation: cloud-drift 26s ease-in-out infinite;
+}
+@keyframes cloud-drift {
+  0%, 100% { transform: translateX(0) scale(var(--cloud-scale, 1)); }
+  50% { transform: translateX(40px) scale(var(--cloud-scale, 1)); }
+}
+
+.wave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+.wave svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.wave-far { bottom: -10px; height: 260px; z-index: 2; }
+.wave-far path { fill: #5fb6cb; opacity: 0.55; }
+.wave-mid { bottom: -20px; height: 210px; z-index: 3; }
+.wave-mid path { fill: #2c8aa8; opacity: 0.85; }
+.wave-near { bottom: -30px; height: 170px; z-index: 4; }
+.wave-near path { fill: #0a4a63; }
+
+/* Teal-tinted, translucent panel matching the water */
+.info-panel {
+  background: rgba(222, 243, 252, 0.328);
+  border: 10px solid rgba(103, 150, 172, 0.499);
+}
+
+.info-panel table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 22px;
+}
+.info-panel td {
+  padding: 9px 4px;
+  font-size: 16px;
+  border-bottom: 1px solid rgba(10, 74, 99, 0.22);
+}
+.info-panel td:first-child {
+  color: #0a4a63;
+  width: 90px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+}
+.info-panel td:last-child {
+  color: #12303e;
   font-weight: 500;
 }
 
 .socials {
   display: flex;
   gap: 10px;
-  margin-top: 8px;
+  flex-wrap: wrap;
 }
-
 .socials a {
-  width: 70px;
+  min-width: 70px;
   height: 35px;
-  border: 2px solid #3a7a58;
+  padding: 0 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
-  background: transparent;
   border-radius: 4px;
-  transition: background 0.2s, color 0.2s;
-  background: #3a7a58;
+  background: #0a4a63;
   color: #fff;
-  margin-bottom: 25px;
+  text-decoration: none;
+  transition: background 0.2s;
 }
-
 .socials a:hover {
-  background: #2c5f43;
-  color: #fff;
+  background: #073246;
 }
 
-/* Experience list */
-.exp-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+/* ============ 5. SKILLS & BEYOND CODE — apple tree on grass ============ */
+.tree-scene {
+  color: #2f4020;
+  padding-top: 70px;
+  padding-bottom: 0;
+  gap: 0;
 }
 
-.exp-item {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: 10px 0 10px 12px;
-  border-left: 2px solid #3a7a58;
-  border-bottom: 1px solid #dde8e1;
-}
-
-.exp-item:last-child {
-  border-bottom: none;
-}
-
-.exp-role {
-  font-size: 14px;
+.tree-heading {
+  position: relative;
+  z-index: 10;
+  margin-bottom: 20px;
+  font-size: 18px;
   font-weight: 700;
-  color: #1a2e22;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #3c5a24;
+  margin: 0 0 8px;
+  text-shadow: 0 2px 10px rgba(255, 255, 255, 0.6);
+  text-align: center;
 }
 
-.exp-meta {
+/* Canopy + trunk + apples */
+.tree-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  height: 620px;
+  z-index: 2;
+  margin-bottom: -40px;
+}
+
+.tree-trunk {
+  position: absolute;
+  top: 260px;
+  left: 50%;
+  width: 170px;
+  height: 320px;
+  margin-left: -85px;
+  background: linear-gradient(180deg, #8a6038 0%, #5a3b21 100%);
+  clip-path: polygon(32% 0%, 68% 0%, 80% 100%, 20% 100%);
+  z-index: 1;
+  box-shadow: inset -12px 0 18px rgba(0, 0, 0, 0.25), inset 10px 0 14px rgba(255, 255, 255, 0.08);
+}
+
+/* Two overlapping "scalloped cloud" layers (a ring of same-size circles
+   plus a solid base underneath) reproduce the two-tone lobed tree look,
+   flat colors only — no gradient shine. */
+.tree-canopy {
+  position: absolute;
+  left: 50%;
+  width: 1100px;
+  height: 400px;
+  transform: translateX(-50%);
+  z-index: 3;
+  pointer-events: none;
+}
+.canopy-layer {
+  position: absolute;
+  inset: 0;
+}
+.canopy-base {
+  position: absolute;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.foliage-blob {
+  position: absolute;
+  border-radius: 40%;
+}
+
+/* Apples: flat solid color, spread widely through the canopy, with a
+   small stem + leaf, and a continuous gentle sway so they feel alive */
+.apple-slot {
+  position: absolute;
+  width: 88px;
+  height: 88px;
+  margin-left: -44px;
+  margin-top: -44px;
+  z-index: 5;
+}
+.apple {
+  position: relative;
+  width: 100%;
+  height: 90%;
+  border-radius: 45%;
   display: flex;
   align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.exp-meta::before {
-  display: none; /* spacer handled by gap */
-}
-
-.exp-org {
-  font-size: 13px;
-  color: #3a7a58;
-  font-weight: 500;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.exp-org:hover {
-  color: #2c5f43;
-  text-decoration: underline;
-}
-
-.exp-date {
-  font-size: 12px;
-  color: #7a9e87;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-}
-
-.exp-date::before {
-  content: '·';
-  margin-right: 6px;
-  color: #b8d4c2;
-}
-
-/* SKILLS & HOBBIES */
-.skills-section {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 16px 24px 40px; 
-  background: #eef2ec;
-}
-
-.skills-section h2 {
-  font-size: 14px;
+  justify-content: center;
+  text-align: center;
+  padding: 0 12px;
+  color: #fff;
   font-weight: 700;
-  color: #3a7a58;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  margin-bottom: 16px;
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  box-shadow: 0 8px 14px rgba(0, 0, 0, 0.22);
+  border: 3px solid rgba(0, 0, 0, 0.12);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  transform-origin: top center;
+  animation-name: apple-sway;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+@keyframes apple-sway {
+  0%, 100% { transform: rotate(-4deg); }
+  50% { transform: rotate(4deg); }
+}
+.apple-stem {
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  width: 4px;
+  height: 16px;
+  margin-left: -6px;
+  background: #6b4a30;
+  border-radius: 2px;
+  transform: rotate(-18deg);
+}
+.apple-leaf {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  width: 20px;
+  height: 11px;
+  margin-left: 0px;
+  background: #4f8a3d;
+  border-radius: 60% 10% 60% 10%;
+  transform: rotate(-20deg);
+}
+.apple-label {
+  position: relative;
+  z-index: 1;
 }
 
-.tags {
+/* Flat grass strip the tree stands on, with big star bursts spelling out hobbies */
+.grass-ground {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  margin-left: 100%;
+  transform: translateX(-50%);
+  background: #a9c07a;
+  padding: 30px 24px 50px;
+  z-index: 1;
+}
+.grass-heading {
+  color: #2e4a1a;
+  text-shadow: none;
+  margin-bottom: 35px;
+}
+
+.star-field {
+  position: relative;
+  max-width: 1200px;
+  height: 120px;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+.vine-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.vine-svg path {
+  fill: none;
+  stroke: #5c7a3a;
+  stroke-width: 0.6;
+  stroke-linecap: round;
+  stroke-dasharray: 2 2.4;
+}
+
+.hobby-star {
+  position: absolute;
+  width: 110px;
+  height: 110px;
+  margin-left: -75px;
+  background: #3f5a24;
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 26px;
+  box-shadow: 0 8px 14px rgba(0, 0, 0, 0.18);
 }
-
-.tag {
-  padding: 6px 16px;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: 500;
-  border: 1.5px solid #b8d4c2;
-  transition: background 0.2s, color 0.2s;
-  background: #3a7a58;
+.hobby-label {
+  font-size: 15px;
+  font-weight: 700;
   color: #fff;
-  border-color: #3a7a58;
 }
 
-.hobby-tag {
-  background: transparent;
-  border: 2px solid #a8c4b0;
-  color: #3a7a58;
-  font-weight: 600;
-}
-
-.hobby-tag:hover {
-  background: #4a9b6f;
-  color: #fff;
-  border-color: #4a9b6f;
-}
-
-/* MOBILE */
-@media (max-width: 700px) {
-  .about {
-    grid-template-columns: 1fr;
+/* ============ MOBILE ============ */
+@media (max-width: 900px) {
+  .waterfall-panels,
+  .exp-edu-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
   }
-  .about-photo img {
-    width: 200px;
-    height: 240px;
-    margin: 0 auto;
+  .waterfall-panels .panel,
+  .exp-edu-row .panel {
+    max-width: 640px;
+  }
+  .funfact-panel {
+    align-self: stretch;
+  }
+  .tree-wrap {
+    height: 480px;
+    margin-bottom: -20px;
+  }
+  .tree-canopy {
+    height: 300px;
+  }
+  .tree-trunk {
+    top: 200px;
+    height: 220px;
+    width: 130px;
+    margin-left: -65px;
+  }
+  .star-field {
+    height: 300px;
+  }
+  .hobby-star {
+    width: 110px;
+    height: 110px;
+    margin-left: -55px;
+    padding: 0 18px;
+  }
+}
+
+@media (max-width: 700px) {
+  .panel {
+    padding: 28px 22px;
+  }
+  .waterfall {
+    width: 44px;
+    margin-left: -22px;
+  }
+  .mushroom {
+    width: 46px;
+  }
+  .story-avatar {
+    float: none;
+    display: block;
+    margin: 0 0 16px;
+  }
+  .beach-sun {
+    width: 100px;
+    height: 100px;
+    top: 4%;
+    left: 6%;
+  }
+  .cloud {
+    width: 90px;
+    height: 30px;
+  }
+  .apple-slot {
+    width: 60px;
+    height: 60px;
+    margin-left: -33px;
+    margin-top: -33px;
+  }
+  .apple {
+    font-size: 12px;
+  }
+  .tree-wrap {
+    height: 420px;
+    margin-bottom: -10px;
+  }
+  .tree-canopy {
+    height: 250px;
+    width: 800px;
+  }
+  .tree-trunk {
+    top: 170px;
+    height: 200px;
+    width: 100px;
+    margin-left: -50px;
+  }
+  .grass-ground {
+    padding: 24px 16px 40px;
+    width: 100%;
+    height: 200px;
+  }
+  .star-field {
+    height: 300px;
+  }
+  .hobby-star {
+    width: 50px;
+    height: 50px;
+    margin-left: -50px;
+    padding: 0 12px;
+  }
+  .hobby-label {
+    font-size: 10px;
   }
 }

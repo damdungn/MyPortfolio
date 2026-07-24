@@ -1,4 +1,5 @@
 // src/pages/Projects.jsx
+import { motion } from 'framer-motion'
 import '../styles/Projects.css'
 import llm from '../../logos/llm.png'
 import snow from '../../logos/snow.png'
@@ -8,6 +9,30 @@ import neuro from '../../logos/neuro-dash.jpg'
 import chicks from '../../logos/chicks-events.jpeg'
 import logos from '../../logos/logo-removebg.png'
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 28 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.2, 0.7, 0.2, 1] },
+  },
+}
+
+function Reveal({ as: As = motion.div, delay = 0, className, children }) {
+  return (
+    <As
+      className={className}
+      variants={fadeUp}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ delay }}
+    >
+      {children}
+    </As>
+  )
+}
+
 // ✏️ Replace with your actual projects
 const SECTIONS = [
   {
@@ -15,17 +40,17 @@ const SECTIONS = [
     label: 'Programs',
     projects: [
       {
-        title: 'Food Bank Project',
+        title: 'FEEDS: Forecasting Engine for Estimating Demand and Supply',
         description: 'An early warning AI system to predict supply and demand for food bank resources based on historical data and external factors such as weather and economic indicators, enabling proactive actions to mitigate shortages in supplies and staffing.',
         logo: logos,
         year: '2026',
         team: '5 people',
         skills: ['Python', 'Prophet', 'AI', 'ML', 'Random Forest', 'Data Analysis', 'React', 'FastAPI'],
         programs: ['AI4Good Lab'],
-        results: 'TBD',
+        results: 'Winning the Accelerator Award at AI4Good Lab 2026',
         links: [
           { label: 'GitHub', url: 'https://github.com/damdungn/FoodBank_e3' },
-          { label: 'Link to App', url: 'https://food-bank-forecast.vercel.app/' },
+          { label: 'Link to App', url: 'https://feeds4good.vercel.app/' },
         ],
       },
       {
@@ -121,25 +146,71 @@ const SECTIONS = [
   },
 ]
 
-export default function Projects() {
+/* Fixed background — same waterfall/mountain language as Home.css's
+   About Me scene, but it never scrolls away: it just sits behind the
+   content for the whole page. Waterfall lives on the right this time. */
+function ProjectsBackground() {
   return (
-    <main className="projects-page">
-      <div className="projects-header">
-        <p className="section-label">Work</p>
-        <h1>Projects</h1>
+    <div className="proj-bg">
+      <div className="proj-sky" />
+
+      <div className="proj-mountain far">
+        <svg viewBox="0 0 1440 260" preserveAspectRatio="none">
+          <polygon points="0,260 0,140 240,60 480,160 760,40 1040,150 1280,70 1440,140 1440,260" />
+        </svg>
+      </div>
+      <div className="proj-mountain mid">
+        <svg viewBox="0 0 1440 220" preserveAspectRatio="none">
+          <polygon points="0,220 0,120 300,40 600,130 900,30 1200,120 1440,60 1440,220" />
+        </svg>
       </div>
 
-      {SECTIONS.map(section => (
-        <section key={section.id} className="projects-section">
-          <h2 className="projects-section-title">{section.label}</h2>
-          <div className="projects-grid">
-            {section.projects.map((project, i) => (
-              <ProjectCard key={i} project={project} sectionId={section.id} />
-            ))}
-          </div>
-        </section>
-      ))}
-    </main>
+      <div className="proj-fog" />
+
+      <div className="proj-waterfall">
+        <div className="proj-waterfall-flow" />
+        <div className="proj-waterfall-mist" />
+      </div>
+
+      <div className="proj-mountain near">
+        <svg viewBox="0 0 1440 160" preserveAspectRatio="none">
+          <polygon points="0,160 0,90 260,20 640,110 1000,10 1440,90 1440,160" />
+        </svg>
+      </div>
+    </div>
+  )
+}
+
+export default function Projects() {
+  return (
+    <>
+      <ProjectsBackground />
+
+      <main className="projects-page">
+        <Reveal className="projects-header">
+          <p className="section-label">Work</p>
+          <h1>Projects</h1>
+          <p className="projects-subtitle">
+            {SECTIONS.map((s) => s.label).join(' · ')}
+          </p>
+        </Reveal>
+
+        {SECTIONS.map((section) => (
+          <section key={section.id} className="projects-section">
+            <Reveal as="h2" className="projects-section-title">
+              {section.label}
+            </Reveal>
+            <div className="projects-grid">
+              {section.projects.map((project, i) => (
+                <Reveal key={i} delay={i * 0.08}>
+                  <ProjectCard project={project} sectionId={section.id} />
+                </Reveal>
+              ))}
+            </div>
+          </section>
+        ))}
+      </main>
+    </>
   )
 }
 
