@@ -129,7 +129,9 @@ export default function Blog() {
       <BlogBackground />
 
       <main className="blog-page">
+        <p className="section-label">Yapping Section</p>
         <h1 className="blog-heading">Blog</h1>
+
 
         <div className="blog-list">
           {posts.map(post => (

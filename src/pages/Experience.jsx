@@ -7,10 +7,10 @@ const ACADEMIC = [
     role: 'Research Alumni',
     org: 'AI4Good Lab',
     url: 'https://www.ai4goodlab.com',
-    date: 'May 2026 – Present',
+    date: 'May 2026 – June 2026',
     details: [
       'Developing a AI/ML solution for a social good problem under expert mentorship.',
-      'Collaborating with a team of 5 across data collection, model training, and deployment.',
+      'Collaborating with a team of 5 across data collection, model training, and deployment. Utilizing Kanban boards and GitHub for project management and version control.',
       'Working on a project to predict supply and demand for food bank resources based on historical data and external factors such as weather and economic indicators, enabling proactive actions to mitigate shortages in supplies and staffing.',
     ],
   },
@@ -22,6 +22,7 @@ const ACADEMIC = [
     details: [
       'Provide one-on-one tutoring for undergraduate students across computing science, statistics and mathematics courses.',
       'Help students build intuition for algorithms, data structures, and software design.',
+      'Supported students through assignment help and final exam preparation, adapting explanations to each student’s background and learning style.',
     ],
   },
   {
@@ -41,7 +42,7 @@ const ACADEMIC = [
     url: 'https://cra.org/ur2phd/',
     date: 'Sep 2025 – Dec 2025',
     details: [
-      'Evaluated GPT-4 and Llama 3 on syntactic and semantic SQL error correction using the Spider dataset.',
+      'Evaluated GPT-4 and Llama 3 on syntactic and semantic SQL error correction across 3,000+ Spider benchmark SQL queries.',
       'Built an automated Python pipeline for query testing, error categorisation, and accuracy benchmarking.',
       'Supervised by Prof Denilson Barbosa, Professor of Computer Science at UAlberta.',
     ],
@@ -49,6 +50,16 @@ const ACADEMIC = [
 ]
 
 const VOLUNTEER = [
+  {
+    role: 'Merchandise Staff',
+    org: 'Animethon 2026',
+    url: 'https://animethon.org',
+    date: 'Aug 2026',
+    details: [
+      'Managed merchandise sales and inventory for a large anime convention, ensuring smooth operations and customer satisfaction.',
+      'Collaborated with a team of volunteers to set up and maintain the merchandise booth, handling cash and card transactions efficiently.',
+    ],
+  },
   {
     role: 'Volunteer Member',
     org: 'International Students & Visitors Services (ISVS), UAlberta',

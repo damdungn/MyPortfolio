@@ -160,6 +160,15 @@
   margin-bottom: 56px;
   text-shadow: 0 2px 14px rgba(255, 255, 255, 0.5);
 }
+.section-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #2c6145;
+  margin-bottom: 8px;
+  margin-top: 50px;
+}
 
 .blog-list {
   display: flex;

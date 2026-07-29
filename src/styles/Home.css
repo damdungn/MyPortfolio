@@ -751,196 +751,153 @@ html {
   background: #073246;
 }
 
-/* ============ 5. SKILLS & BEYOND CODE — apple tree on grass ============ */
-.tree-scene {
-  color: #2f4020;
+/* ============ 5. SKILLS & BEYOND CODE — bunting flags & string lights ============ */
+.bunting-scene {
+  color: #16323d;
   padding-top: 70px;
-  padding-bottom: 0;
-  gap: 0;
+  padding-bottom: 60px;
+  gap: 8px;
 }
 
-.tree-heading {
+.bunting-heading {
   position: relative;
   z-index: 10;
-  margin-bottom: 20px;
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #3c5a24;
-  margin: 0 0 8px;
-  text-shadow: 0 2px 10px rgba(255, 255, 255, 0.6);
-  text-align: center;
-}
-
-/* Canopy + trunk + apples */
-.tree-wrap {
-  position: relative;
+  font-size: clamp(30px, 5vw, 48px);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #10222b;
+  margin: 26px 0 0;
+  text-align: left;
   width: 100%;
-  max-width: 960px;
-  height: 620px;
-  z-index: 2;
-  margin-bottom: -40px;
+  max-width: 1100px;
 }
-
-.tree-trunk {
-  position: absolute;
-  top: 260px;
-  left: 50%;
-  width: 170px;
-  height: 320px;
-  margin-left: -85px;
-  background: linear-gradient(180deg, #8a6038 0%, #5a3b21 100%);
-  clip-path: polygon(32% 0%, 68% 0%, 80% 100%, 20% 100%);
-  z-index: 1;
-  box-shadow: inset -12px 0 18px rgba(0, 0, 0, 0.25), inset 10px 0 14px rgba(255, 255, 255, 0.08);
-}
-
-/* Two overlapping "scalloped cloud" layers (a ring of same-size circles
-   plus a solid base underneath) reproduce the two-tone lobed tree look,
-   flat colors only — no gradient shine. */
-.tree-canopy {
-  position: absolute;
-  left: 50%;
-  width: 1100px;
-  height: 400px;
-  transform: translateX(-50%);
-  z-index: 3;
-  pointer-events: none;
-}
-.canopy-layer {
-  position: absolute;
-  inset: 0;
-}
-.canopy-base {
-  position: absolute;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-}
-.foliage-blob {
-  position: absolute;
-  border-radius: 40%;
-}
-
-/* Apples: flat solid color, spread widely through the canopy, with a
-   small stem + leaf, and a continuous gentle sway so they feel alive */
-.apple-slot {
-  position: absolute;
-  width: 88px;
-  height: 88px;
-  margin-left: -44px;
-  margin-top: -44px;
-  z-index: 5;
-}
-.apple {
-  position: relative;
-  width: 100%;
-  height: 90%;
-  border-radius: 45%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 0 12px;
-  color: #fff;
-  font-weight: 700;
-  font-size: 15px;
-  letter-spacing: 0.01em;
-  box-shadow: 0 8px 14px rgba(0, 0, 0, 0.22);
-  border: 3px solid rgba(0, 0, 0, 0.12);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-  transform-origin: top center;
-  animation-name: apple-sway;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-}
-@keyframes apple-sway {
-  0%, 100% { transform: rotate(-4deg); }
-  50% { transform: rotate(4deg); }
-}
-.apple-stem {
-  position: absolute;
-  top: -13px;
-  left: 50%;
-  width: 4px;
-  height: 16px;
-  margin-left: -6px;
-  background: #6b4a30;
-  border-radius: 2px;
-  transform: rotate(-18deg);
-}
-.apple-leaf {
-  position: absolute;
-  top: -11px;
-  left: 50%;
-  width: 20px;
-  height: 11px;
-  margin-left: 0px;
-  background: #4f8a3d;
-  border-radius: 60% 10% 60% 10%;
-  transform: rotate(-20deg);
-}
-.apple-label {
-  position: relative;
-  z-index: 1;
-}
-
-/* Flat grass strip the tree stands on, with big star bursts spelling out hobbies */
-.grass-ground {
-  position: relative;
-  width: 100%;
-  height: 220px;
-  margin-left: 100%;
-  transform: translateX(-50%);
-  background: #a9c07a;
-  padding: 30px 24px 50px;
-  z-index: 1;
-}
-.grass-heading {
-  color: #2e4a1a;
-  text-shadow: none;
-  margin-bottom: 35px;
-}
-
-.star-field {
-  position: relative;
-  max-width: 1200px;
-  height: 120px;
-  margin: 0 auto;
+.bunting-heading.hobbies-heading {
   margin-top: 10px;
 }
-.vine-svg {
+
+/* Garland container: the string (SVG) plus the flags/bulbs hanging from
+   it, all placed using the exact same quadratic-bezier curve so they
+   land precisely on the drawn line. */
+.garland {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1200px;
+  overflow: visible;
+}
+.flag-garland {
+  height: 300px;
+  max-width: 1200px;
+}
+.bulb-garland {
+  height: 210px;
+}
+
+.garland-string {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   overflow: visible;
 }
-.vine-svg path {
+.garland-string path {
   fill: none;
-  stroke: #5c7a3a;
-  stroke-width: 0.6;
+  stroke: #16232b;
+  stroke-width: 2;
   stroke-linecap: round;
-  stroke-dasharray: 2 2.4;
 }
 
-.hobby-star {
+/* ── Pennant flags (Skills) ── */
+.flag-slot {
   position: absolute;
-  width: 110px;
-  height: 110px;
-  margin-left: -75px;
-  background: #3f5a24;
+  transform: translateX(-50%);
+  width: 96px;
+}
+.flag {
+  width: 100%;
+  min-height: 96px;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 14px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+  transform-origin: top center;
+  animation-name: flag-sway;
+  animation-duration: 3.2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+@keyframes flag-sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+.flag-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #16232b;
+  text-align: center;
+  line-height: 1.25;
+  padding: 0 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-word;
+}
+/* ── String-light bulbs (Beyond Code) ── */
+.bulb-slot {
+  position: absolute;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.bulb-socket {
+  width: 20px;
+  height: 14px;
+  background: #16232b;
+  border-radius: 2px;
+}
+.bulb {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  margin-top: -2px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 0 26px;
-  box-shadow: 0 8px 14px rgba(0, 0, 0, 0.18);
+  padding: 0 14px;
+  box-shadow: 0 8px 16px rgb(253, 251, 251);
+  animation-name: bulb-glow-pulse;
+  animation-duration: 3.6s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
 }
-.hobby-label {
-  font-size: 15px;
+.bulb-glow {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  width: 130px;
+  height: 60px;
+  margin-left: -65px;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.85), transparent 72%);
+  filter: blur(3px);
+  pointer-events: none;
+  z-index: -1;
+}
+@keyframes bulb-glow-pulse {
+  0%, 100% { box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15), 0 0 18px 4px rgba(255, 255, 255, 0.25); }
+  50% { box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15), 0 0 28px 10px rgba(255, 255, 255, 0.5); }
+}
+.bulb-label {
+  position: relative;
+  font-size: 13px;
   font-weight: 700;
-  color: #fff;
+  color: #16232b;
+  line-height: 1.2;
 }
 
 /* ============ MOBILE ============ */
@@ -958,27 +915,28 @@ html {
   .funfact-panel {
     align-self: stretch;
   }
-  .tree-wrap {
-    height: 480px;
-    margin-bottom: -20px;
+  .flag-garland {
+    height: 260px;
   }
-  .tree-canopy {
-    height: 300px;
+  .bulb-garland {
+    height: 190px;
   }
-  .tree-trunk {
-    top: 200px;
-    height: 220px;
-    width: 130px;
-    margin-left: -65px;
+  .flag-slot {
+    width: 58px;
   }
-  .star-field {
-    height: 300px;
+  .flag {
+    height: 84px;
+    padding-top: 10px;
   }
-  .hobby-star {
-    width: 110px;
-    height: 110px;
-    margin-left: -55px;
-    padding: 0 18px;
+  .flag-label {
+    font-size: 10px;
+  }
+  .bulb {
+    width: 72px;
+    height: 72px;
+  }
+  .bulb-label {
+    font-size: 11px;
   }
 }
 
@@ -1008,44 +966,33 @@ html {
     width: 90px;
     height: 30px;
   }
-  .apple-slot {
-    width: 60px;
-    height: 60px;
-    margin-left: -33px;
-    margin-top: -33px;
+  .flag-garland {
+    height: 220px;
   }
-  .apple {
-    font-size: 12px;
+  .bulb-garland {
+    height: 170px;
   }
-  .tree-wrap {
-    height: 420px;
-    margin-bottom: -10px;
+  .flag-slot {
+    width: 46px;
   }
-  .tree-canopy {
-    height: 250px;
-    width: 800px;
+  .flag {
+    height: 66px;
+    padding-top: 8px;
   }
-  .tree-trunk {
-    top: 170px;
-    height: 200px;
-    width: 100px;
-    margin-left: -50px;
+  .flag-label {
+    font-size: 9px;
   }
-  .grass-ground {
-    padding: 24px 16px 40px;
-    width: 100%;
-    height: 200px;
+  .bulb {
+    width: 56px;
+    height: 56px;
   }
-  .star-field {
-    height: 300px;
+  .bulb-label {
+    font-size: 9px;
   }
-  .hobby-star {
-    width: 50px;
-    height: 50px;
-    margin-left: -50px;
-    padding: 0 12px;
-  }
-  .hobby-label {
-    font-size: 10px;
+  .bulb-glow {
+    width: 90px;
+    height: 44px;
+    margin-left: -45px;
+    bottom: -20px;
   }
 }

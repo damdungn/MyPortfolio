@@ -229,13 +229,13 @@
 .exp-card-role {
   font-size: 16px;
   font-weight: 700;
-  color: #0b2b3c;
+  color: #05496d;
 }
 
 .exp-card-org {
   font-size: 15px;
   font-weight: 600;
-  color: #0a4a63;
+  color: #0e818afd;
   text-decoration: none;
   letter-spacing: 0.02em;
   transition: color 0.2s;
@@ -258,7 +258,7 @@
   color: #0a4a63;
   letter-spacing: 0.06em;
   white-space: nowrap;
-  background: rgba(10, 74, 99, 0.08);
+  background: rgba(20, 148, 152, 0.08);
   border: 1px solid rgba(10, 74, 99, 0.28);
   padding: 3px 10px;
   border-radius: 20px;

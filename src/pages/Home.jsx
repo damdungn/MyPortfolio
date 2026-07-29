@@ -49,34 +49,8 @@ const EXPERIENCE = [
   { role: 'Volunteer Member', org: 'ISVS, UAlberta', href: 'https://www.ualberta.ca/en/international/international-student-services/index.html', date: 'Aug 2025 – Present' },
 ]
 
-const SKILLS = ['JavaScript', 'React', 'Python', 'Node.js', 'Git', 'SQL', 'HTML', 'CSS', 'C', 'Java', 'Machine Learning', 'Computer Vision', 'Data Analysis', 'Problem Solving']
+const SKILLS = ['JavaScript', 'React', 'Python', 'Git/Figma', 'SQL', 'HTML/CSS', 'C/C++', 'Java', 'AI/ML', 'Computer Vision']
 const HOBBIES = ['Baking', 'Bubble Tea', 'Cooking', 'Reading', 'Painting', 'Crocheting', 'Gardening']
-
-// Apple colors cycle through red/orange/green/yellow, like the reference art
-const APPLE_COLORS = ['#d1382a', '#e8963a', '#8bb84a', '#e0453a', '#f2c94c', '#7cb342']
-
-// Distributes apples across the canopy using a golden-angle spiral, which
-// gives an organic, non-overlapping scatter for any number of skills.
-function buildAppleLayout(count) {
-  const positions = []
-  const golden = 137.508 * (Math.PI / 180)
-  for (let i = 0; i < count; i++) {
-    const t = (i + 0.3) / count
-    const radius = Math.sqrt(t)
-    const angle = i * golden
-    const left = 50 + radius * 45 * Math.cos(angle)
-    const top = 33 + radius * 28 * Math.sin(angle)
-    positions.push({
-      left,
-      top,
-      rotate: (i % 2 === 0 ? -1 : 1) * (6 + (i % 4) * 3),
-      size: 0.86 + ((i * 50) % 30) / 100,
-      swayDuration: 3 + (i % 3) * 0.6,
-      swayDelay: (i * 0.18) % 2.4,
-    })
-  }
-  return positions
-}
 
 const MUSHROOMS = [
   { left: 4, scale: 1.1, type: 'fly-agaric' },
@@ -123,84 +97,36 @@ const CLOUDS = [
   { top: 14, left: 4, scale: 0.7, duration: 24, delay: 8 },
 ]
 
-// Places same-size circles around an ellipse's perimeter, giving a scalloped
-// "cloud" outline. Combined with a solid base ellipse underneath (so the
-// middle isn't hollow) this reproduces the two-tone lobed tree look.
-function buildCloudLobes({ cx, cy, rx, ry, count, size, rotationOffset = 0 }) {
-  const lobes = []
-  for (let i = 0; i < count; i++) {
-    const angle = rotationOffset + (i / count) * Math.PI * 2
-    lobes.push({
-      left: cx + rx * Math.cos(angle),
-      top: cy + ry * Math.sin(angle),
-      size,
-    })
-  }
-  return lobes
-}
-
-const CANOPY_LAYERS = [
-  {
-    color: '#3f7a34',
-    base: { left: 42, top: 44, width: '70%', height: '68%' },
-    lobes: buildCloudLobes({ cx: 42, cy: 40, rx: 24, ry: 22, count: 9, size: 150 }),
-  },
-  {
-    color: '#528e37',
-    base: { left: 58, top: 56, width: '70%', height: '68%' },
-    lobes: buildCloudLobes({ cx: 55, cy: 58, rx: 28, ry: 24, count: 11, size: 170, rotationOffset: 0.3 }),
-  },
-  {
-    color: '#5aa736',
-    base: { left: 53, top: 56, width: '40%', height: '50%' },
-    lobes: buildCloudLobes({ cx: 50, cy: 54, rx: 28, ry: 24, count: 11, size: 170, rotationOffset: 0.3 }),
-  },
+// Clouds drifting across the bunting sky (Skills section)
+const BUNTING_CLOUDS = [
+  { top: 10, left: 24, scale: 1.2, duration: 30, delay: 0 },
+  { top: 46, left: 78, scale: 1, duration: 26, delay: 5 },
+  { top: 58, left: 12, scale: 0.85, duration: 24, delay: 3 },
+  { top: 22, left: 88, scale: 0.9, duration: 28, delay: 7 },
 ]
 
-// 8-point "burst" star used for the beyond-code flowers on the grass
-function starClipPath(points = 8, outerR = 50, innerR = 32) {
-  const coords = []
-  const step = Math.PI / points
-  for (let i = 0; i < points * 2; i++) {
-    const r = i % 2 === 0 ? outerR : innerR
-    const angle = i * step - Math.PI / 2
-    const x = 50 + r * Math.cos(angle)
-    const y = 50 + r * Math.sin(angle)
-    coords.push(`${x.toFixed(1)}% ${y.toFixed(1)}%`)
-  }
-  return `polygon(${coords.join(', ')})`
-}
-const STAR_CLIP = starClipPath()
+// Rainbow palette for the skill pennant flags, cycling in hue order
+const SKILL_COLORS = ['#d9534f', '#e8963a', '#e0b473', '#f2d675', '#c8e88f', '#7dd6a0', '#6fb3e0', '#7b8fe0', '#b98fe0']
 
-function buildStarLayout(count) {
-  const positions = []
-  for (let i = 0; i < count; i++) {
-    const left = 8 + (84 * i) / Math.max(count - 1, 1)
-    positions.push({
-      left,
-      bottom: i % 2 === 0 ? 0 : 34,
-      rotate: (i % 2 === 0 ? -1 : 1) * (4 + (i % 3) * 3),
-      scale: 0.9 + ((i * 41) % 22) / 100,
-    })
-  }
-  return positions
+// Soft pastel palette for the hobby string-light bulbs
+const HOBBY_COLORS = ['#f7e2a4', '#f5d0b8', '#f3b8d0', '#d7f0b0', '#c9eef0', '#f3b0ab']
+
+// Quadratic-bezier evaluator — used both to draw the garland string (SVG
+// path) and to place each flag/bulb exactly on that same curve.
+function lineY(t, y0, y2) {
+  return y0 + (y2 - y0) * t
+}
+function buildStringPositions(count, y0, yc, y2) {
+  return Array.from({ length: count }).map((_, i) => {
+    const t = count === 1 ? 0.5 : i / (count - 1)
+    return { left: t * 90, top: lineY(t, y0, y2) }
+  })
 }
 
-// A gentle wavy "vine" doodle connecting the flower centers, like the
-// connecting lines in the reference art
-function buildVinePath(positions) {
-  if (positions.length < 2) return ''
-  const pts = positions.map((p) => ({ x: p.left, y: 82 - (p.bottom / 34) * 18 }))
-  let d = `M ${pts[0].x} ${pts[0].y}`
-  for (let i = 1; i < pts.length; i++) {
-    const prev = pts[i - 1]
-    const curr = pts[i]
-    const midX = (prev.x + curr.x) / 2
-    const midY = (prev.y + curr.y) / 2 + 8
-    d += ` Q ${midX} ${midY} ${curr.x} ${curr.y}`
-  }
-  return d
-}
+// Curve shape (in % of each garland's own container): starts lower on the
+// left, rises toward the right, like the reference bunting photo.
+const FLAG_LINE = { y0: 58, y2: 5, yc: 20 }
+const BULB_LINE = { y0: 65, y2: 6, yc: 20 }
 
 /* ============ 1. HERO — mushroom forest ============ */
 function MushroomHero() {
@@ -541,122 +467,111 @@ function BeachContact() {
   )
 }
 
-/* ============ 5. SKILLS & BEYOND CODE — apple tree on grass ============ */
-function AppleTree() {
+/* ============ 5. SKILLS & BEYOND CODE — bunting flags & string lights ============ */
+function SkillsBunting() {
   const ref = useRef(null)
   const { scrollYProgress: progress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
 
-  const skyTop = useTransform(progress, [0, 1], ['#CDE8F0', '#7FB8C9'])
-  const skyBottom = useTransform(progress, [0, 1], ['#F3EFD8', '#DDE7B0'])
+  const skyTop = useTransform(progress, [0, 1], ['#CDE8F0', '#8FC2DA'])
+  const skyBottom = useTransform(progress, [0, 1], ['#EAF6FB', '#CFE9F2'])
   const sky = useTransform([skyTop, skyBottom], ([t, b]) => `linear-gradient(180deg, ${t} 0%, ${b} 100%)`)
+  const cloudsOpacity = useTransform(progress, [0, 0.7], [1, 0.5])
 
-  const applePositions = buildAppleLayout(SKILLS.length)
-  const starPositions = buildStarLayout(HOBBIES.length)
-  const vinePath = buildVinePath(starPositions)
+  const flagPositions = buildStringPositions(SKILLS.length, FLAG_LINE.y0, FLAG_LINE.yc, FLAG_LINE.y2)
+  const bulbPositions = buildStringPositions(HOBBIES.length, BULB_LINE.y0, BULB_LINE.yc, BULB_LINE.y2-2)
 
   return (
-    <section className="scene tree-scene" ref={ref} id="skills">
+    <section className="scene bunting-scene" ref={ref} id="skills">
       <motion.div className="scene-sky" style={{ background: sky }} />
 
-      <h2 className="tree-heading">SKILLS</h2>
+      <motion.div className="cloud-layer" style={{ opacity: cloudsOpacity }}>
+        {BUNTING_CLOUDS.map((c, i) => (
+          <span
+            key={i}
+            className="cloud"
+            style={{
+              top: `${c.top}%`,
+              left: `${c.left}%`,
+              '--cloud-scale': c.scale,
+              animationDuration: `${c.duration}s`,
+              animationDelay: `${c.delay}s`,
+            }}
+          />
+        ))}
+      </motion.div>
 
-      <div className="tree-wrap">
-        <div className="tree-trunk" />
+      <h2 className="bunting-heading">SKILLS</h2>
 
-        {/* Two overlapping scalloped-cloud layers give the two-tone lobed canopy */}
-        <div className="tree-canopy">
-          {CANOPY_LAYERS.map((layer, li) => (
-            <div key={li} className="canopy-layer">
-              <div
-                className="canopy-base"
-                style={{
-                  left: `${layer.base.left}%`,
-                  top: `${layer.base.top}%`,
-                  width: layer.base.width,
-                  height: layer.base.height,
-                  background: layer.color,
-                }}
-              />
-              {layer.lobes.map((lobe, i) => (
-                <span
-                  key={i}
-                  className="foliage-blob"
-                  style={{
-                    left: `${lobe.left}%`,
-                    top: `${lobe.top}%`,
-                    width: lobe.size,
-                    height: lobe.size,
-                    marginLeft: -lobe.size / 2,
-                    marginTop: -lobe.size / 2,
-                    background: layer.color,
-                  }}
-                />
-              ))}
-            </div>
-          ))}
-        </div>
+      <div className="garland flag-garland">
+        <svg className="garland-string" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <path
+            d={`M 1 ${FLAG_LINE.y0} L 95 ${FLAG_LINE.y2}`}
+            vectorEffect="non-scaling-stroke"
+          />
+        </svg>
 
-        {/* Apples pop in on scroll, then keep a gentle continuous sway */}
         {SKILLS.map((s, i) => {
-          const pos = applePositions[i]
+          const pos = flagPositions[i]
           return (
             <motion.div
               key={s}
-              className="apple-slot"
+              className="flag-slot"
               style={{ left: `${pos.left}%`, top: `${pos.top}%` }}
-              initial={{ opacity: 0, scale: 0 }}
-              whileInView={{ opacity: 1, scale: pos.size }}
+              initial={{ opacity: 0, y: -18, scale: 0.6 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true, amount: 0.4 }}
-              transition={{ delay: i * 0.05, type: 'spring', stiffness: 170, damping: 14 }}
+              transition={{ delay: i * 0.05, type: 'spring', stiffness: 190, damping: 15 }}
             >
               <div
-                className="apple"
+                className="flag"
                 style={{
-                  background: APPLE_COLORS[i % APPLE_COLORS.length],
-                  animationDuration: `${pos.swayDuration}s`,
-                  animationDelay: `${pos.swayDelay}s`,
+                  background: SKILL_COLORS[i % SKILL_COLORS.length],
+                  animationDelay: `${(i % 6) * 0.35}s`,
                 }}
               >
-                <span className="apple-stem" />
-                <span className="apple-leaf" />
-                <span className="apple-label">{s}</span>
+                <span className="flag-label">{s}</span>
               </div>
             </motion.div>
           )
         })}
       </div>
 
-      {/* Flat grass strip the tree stands on, with big star bursts spelling out hobbies */}
-      <div className="grass-ground">
-        <h2 className="tree-heading grass-heading">BEYOND CODE</h2>
+      <h2 className="bunting-heading hobbies-heading">BEYOND CODE</h2>
 
-        <div className="star-field">
-          <svg className="vine-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <path d={vinePath} />
-          </svg>
+      <div className="garland bulb-garland">
+        <svg className="garland-string" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <path
+            d={`M 0 ${BULB_LINE.y0} L 95 ${BULB_LINE.y2}`}
+            vectorEffect="non-scaling-stroke"
+          />
+        </svg>
 
-          {HOBBIES.map((h, i) => {
-            const pos = starPositions[i]
-            return (
-              <motion.div
-                key={h}
-                className="hobby-star"
+        {HOBBIES.map((h, i) => {
+          const pos = bulbPositions[i]
+          return (
+            <motion.div
+              key={h}
+              className="bulb-slot"
+              style={{ left: `${pos.left}%`, top: `${pos.top}%` }}
+              initial={{ opacity: 0, scale: 0 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ delay: i * 0.07, type: 'spring', stiffness: 210, damping: 16 }}
+            >
+              <span className="bulb-socket" />
+              <div
+                className="bulb"
                 style={{
-                  left: `${pos.left}%`,
-                  bottom: pos.bottom,
-                  clipPath: STAR_CLIP,
-                  transform: `translateX(-50%) rotate(${pos.rotate}deg) scale(${pos.scale})`,
+                  background: HOBBY_COLORS[i % HOBBY_COLORS.length],
+                  animationDelay: `${(i % 4) * 0.5}s`,
                 }}
-                initial={{ opacity: 0, scale: 0 }}
-                whileInView={{ opacity: 1, scale: pos.scale }}
-                viewport={{ once: true, amount: 0.6 }}
-                transition={{ delay: i * 0.08, type: 'spring', stiffness: 180, damping: 14 }}
               >
-                <span className="hobby-label">{h}</span>
-              </motion.div>
-            )
-          })}
-        </div>
+                <span className="bulb-glow" />
+                <span className="bulb-label">{h}</span>
+              </div>
+            </motion.div>
+          )
+        })}
       </div>
     </section>
   )
@@ -669,7 +584,7 @@ export default function Home() {
       <WaterfallAbout />
       <DaisyExperience />
       <BeachContact />
-      <AppleTree />
+      <SkillsBunting />
     </main>
   )
 }
