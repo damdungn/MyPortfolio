@@ -42,11 +42,11 @@ function WaveLayer({ layerClass, y }) {
 }
 
 const EXPERIENCE = [
-  { role: 'Research Alumni', org: 'AI4Good Lab', href: 'https://www.ai4goodlab.com', date: 'May 2026 – Present' },
-  { role: 'Tutor', org: 'Student Union, UAlberta', href: 'https://www2.su.ualberta.ca/services/infolink/tutor/registry/', date: 'Jan 2026 – Present' },
-  { role: 'Teaching Assistant · CMPUT 204', org: 'University of Alberta', href: 'https://apps.ualberta.ca/catalogue/course/cmput/204', date: 'Jan 2026 – Apr 2026' },
-  { role: 'Researcher', org: 'UR2PhD', href: 'https://cra.org/ur2phd/', date: 'Sep 2025 – Dec 2025' },
-  { role: 'Volunteer Member', org: 'ISVS, UAlberta', href: 'https://www.ualberta.ca/en/international/international-student-services/index.html', date: 'Aug 2025 – Present' },
+  { role: 'Co-op Research Assistant', org: 'AI4Good Lab', href: 'https://sites.google.com/ualberta.ca/smart-mapping/home', date: 'Sep. 2026 – Present' },
+  { role: 'Machine Learning Fellow', org: 'AI4Good Lab', href: 'https://www.ai4goodlab.com', date: 'May 2026 – June 2026' },
+  { role: 'Tutor', org: 'Student Union, UAlberta', href: 'https://www2.su.ualberta.ca/services/infolink/tutor/registry/', date: 'Jan. 2026 – Present' },
+  { role: 'Teaching Assistant · CMPUT 204', org: 'University of Alberta', href: 'https://apps.ualberta.ca/catalogue/course/cmput/204', date: 'Jan. 2026 – Apr. 2026' },
+  { role: 'Undergraduate Researcher', org: 'UR2PhD', href: 'https://cra.org/ur2phd/', date: 'Sep. 2025 – Dec. 2025' },
 ]
 
 const SKILLS = ['JavaScript', 'React', 'Python', 'Git/Figma', 'SQL', 'HTML/CSS', 'C/C++', 'Java', 'AI/ML', 'Computer Vision']
@@ -393,7 +393,7 @@ function DaisyExperience() {
             <tbody>
               <tr><td>University</td><td>University of Alberta</td></tr>
               <tr><td>Degree</td><td>Bachelor of Science in Computing Science</td></tr>
-              <tr><td>Graduation</td><td>May 2027</td></tr>
+              <tr><td>Graduation</td><td>December 2027</td></tr>
               <tr><td>GPA</td><td>3.8 /4.0</td></tr>
             </tbody>
           </table>
