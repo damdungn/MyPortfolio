@@ -1,5 +1,5 @@
 // src/pages/Home.jsx
-import { useRef } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import '../styles/Home.css'
@@ -42,7 +42,7 @@ function WaveLayer({ layerClass, y }) {
 }
 
 const EXPERIENCE = [
-  { role: 'Co-op Research Assistant', org: 'AI4Good Lab', href: 'https://sites.google.com/ualberta.ca/smart-mapping/home', date: 'Sep. 2026 – Present' },
+  { role: 'Co-op Research Assistant', org: 'SMART Mapping UA Lab', href: 'https://sites.google.com/ualberta.ca/smart-mapping/home', date: 'Sep. 2026 – Present' },
   { role: 'Machine Learning Fellow', org: 'AI4Good Lab', href: 'https://www.ai4goodlab.com', date: 'May 2026 – June 2026' },
   { role: 'Tutor', org: 'Student Union, UAlberta', href: 'https://www2.su.ualberta.ca/services/infolink/tutor/registry/', date: 'Jan. 2026 – Present' },
   { role: 'Teaching Assistant · CMPUT 204', org: 'University of Alberta', href: 'https://apps.ualberta.ca/catalogue/course/cmput/204', date: 'Jan. 2026 – Apr. 2026' },
@@ -97,36 +97,124 @@ const CLOUDS = [
   { top: 14, left: 4, scale: 0.7, duration: 24, delay: 8 },
 ]
 
-// Clouds drifting across the bunting sky (Skills section)
+// Soft clouds drifting across the bunting sky (Skills section). `depth`
+// 0 = far (small, faint, hazier) … 1 = near (large, crisp).
 const BUNTING_CLOUDS = [
-  { top: 10, left: 24, scale: 1.2, duration: 30, delay: 0 },
-  { top: 46, left: 78, scale: 1, duration: 26, delay: 5 },
-  { top: 58, left: 12, scale: 0.85, duration: 24, delay: 3 },
-  { top: 22, left: 88, scale: 0.9, duration: 28, delay: 7 },
+  { top: 4, left: 6, width: 300, depth: 0.9, duration: 34, delay: 0 },
+  { top: 12, left: 62, width: 220, depth: 0.5, duration: 30, delay: 4 },
+  { top: 36, left: 82, width: 260, depth: 0.7, duration: 28, delay: 2 },
+  { top: 48, left: 30, width: 160, depth: 0.2, duration: 40, delay: 6 },
+  { top: 66, left: 4, width: 240, depth: 0.6, duration: 32, delay: 3 },
+  { top: 78, left: 66, width: 320, depth: 1, duration: 36, delay: 8 },
 ]
 
 // Rainbow palette for the skill pennant flags, cycling in hue order
 const SKILL_COLORS = ['#d9534f', '#e8963a', '#e0b473', '#f2d675', '#c8e88f', '#7dd6a0', '#6fb3e0', '#7b8fe0', '#b98fe0']
 
 // Soft pastel palette for the hobby string-light bulbs
-const HOBBY_COLORS = ['#f7e2a4', '#f5d0b8', '#f3b8d0', '#d7f0b0', '#c9eef0', '#f3b0ab']
+const HOBBY_COLORS = ['#f8e3a1', '#f9cfb2', '#f5c3da', '#d5edb1', '#c3e4f3', '#f4bdb6', '#dccdf2']
 
-// Quadratic-bezier evaluator — used both to draw the garland string (SVG
-// path) and to place each flag/bulb exactly on that same curve.
-function lineY(t, y0, y2) {
-  return y0 + (y2 - y0) * t
+function hexToRgba(hex, alpha) {
+  const n = parseInt(hex.slice(1), 16)
+  return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${alpha})`
 }
-function buildStringPositions(count, y0, yc, y2) {
-  return Array.from({ length: count }).map((_, i) => {
-    const t = count === 1 ? 0.5 : i / (count - 1)
-    return { left: t * 90, top: lineY(t, y0, y2) }
+
+// Tracks an element's rendered size so the garland can be laid out in real
+// pixels — needed to tilt each flag to the string's actual slope.
+function useElementSize(ref) {
+  const [size, setSize] = useState({ width: 0, height: 0 })
+  useLayoutEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const ro = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect
+      setSize(prev => (prev.width === width && prev.height === height ? prev : { width, height }))
+    })
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [ref])
+  return size
+}
+
+// The string is a quadratic bezier that sags a little between its two
+// anchors. Items are spaced evenly by arc length along that same curve, and
+// each gets the tangent angle so flags can sit flush on the string.
+function buildGarland({ width, height }, line, count) {
+  const p0 = { x: (line.x0 / 100) * width, y: (line.y0 / 100) * height }
+  const p2 = { x: (line.x2 / 100) * width, y: (line.y2 / 100) * height }
+  const p1 = { x: (p0.x + p2.x) / 2, y: (p0.y + p2.y) / 2 + (line.sag / 100) * height }
+
+  const at = t => ({
+    x: (1 - t) ** 2 * p0.x + 2 * (1 - t) * t * p1.x + t ** 2 * p2.x,
+    y: (1 - t) ** 2 * p0.y + 2 * (1 - t) * t * p1.y + t ** 2 * p2.y,
   })
+  const slope = t => ({
+    x: 2 * (1 - t) * (p1.x - p0.x) + 2 * t * (p2.x - p1.x),
+    y: 2 * (1 - t) * (p1.y - p0.y) + 2 * t * (p2.y - p1.y),
+  })
+
+  const STEPS = 240
+  const lengths = [0]
+  for (let i = 1, prev = p0; i <= STEPS; i++) {
+    const pt = at(i / STEPS)
+    lengths.push(lengths[i - 1] + Math.hypot(pt.x - prev.x, pt.y - prev.y))
+    prev = pt
+  }
+  const total = lengths[STEPS]
+  const tAtLength = target => {
+    const i = lengths.findIndex(l => l >= target)
+    if (i <= 0) return 0
+    return (i - 1 + (target - lengths[i - 1]) / (lengths[i] - lengths[i - 1])) / STEPS
+  }
+
+  const items = Array.from({ length: count }).map((_, i) => {
+    const t = tAtLength((total * (i + 0.5)) / count)
+    const d = slope(t)
+    return { ...at(t), angle: (Math.atan2(d.y, d.x) * 180) / Math.PI }
+  })
+
+  return {
+    path: `M ${p0.x} ${p0.y} Q ${p1.x} ${p1.y} ${p2.x} ${p2.y}`,
+    spacing: total / count,
+    items,
+  }
 }
 
-// Curve shape (in % of each garland's own container): starts lower on the
-// left, rises toward the right, like the reference bunting photo.
-const FLAG_LINE = { y0: 58, y2: 5, yc: 20 }
-const BULB_LINE = { y0: 65, y2: 6, yc: 20 }
+// Anchor points (% of each garland's own box): low on the left, rising to
+// the right, with a gentle sag in between.
+const FLAG_LINE = { x0: 0, y0: 58, x2: 98, y2: 6, sag: 12 }
+const BULB_LINE = { x0: 0, y0: 62, x2: 98, y2: 4, sag: 12 }
+
+function useMediaQuery(query) {
+  const [matches, setMatches] = useState(() => window.matchMedia(query).matches)
+  useLayoutEffect(() => {
+    const mql = window.matchMedia(query)
+    const onChange = () => setMatches(mql.matches)
+    onChange()
+    mql.addEventListener('change', onChange)
+    return () => mql.removeEventListener('change', onChange)
+  }, [query])
+  return matches
+}
+
+function Garland({ className, line, count, children }) {
+  const ref = useRef(null)
+  const size = useElementSize(ref)
+  const geo = size.width ? buildGarland(size, line, count) : null
+
+  return (
+    <div className={`garland ${className}`} ref={ref}>
+      {geo && (
+        <>
+          {children(geo)}
+          <svg className="garland-string" viewBox={`0 0 ${size.width} ${size.height}`}>
+            <path d={geo.path} />
+          </svg>
+        </>
+      )}
+    </div>
+  )
+}
 
 /* ============ 1. HERO — mushroom forest ============ */
 function MushroomHero() {
@@ -472,107 +560,139 @@ function SkillsBunting() {
   const ref = useRef(null)
   const { scrollYProgress: progress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
 
-  const skyTop = useTransform(progress, [0, 1], ['#CDE8F0', '#8FC2DA'])
-  const skyBottom = useTransform(progress, [0, 1], ['#EAF6FB', '#CFE9F2'])
-  const sky = useTransform([skyTop, skyBottom], ([t, b]) => `linear-gradient(180deg, ${t} 0%, ${b} 100%)`)
-  const cloudsOpacity = useTransform(progress, [0, 0.7], [1, 0.5])
+  const skyTop = useTransform(progress, [0, 1], ['#9fd2f2', '#86c2ea'])
+  const skyMid = useTransform(progress, [0, 1], ['#cbe7f8', '#b9ddf4'])
+  const skyBottom = useTransform(progress, [0, 1], ['#f5fafe', '#e4f1fa'])
+  const sky = useTransform(
+    [skyTop, skyMid, skyBottom],
+    ([t, m, b]) => `linear-gradient(180deg, ${t} 0%, ${m} 48%, ${b} 100%)`
+  )
+  const cloudsOpacity = useTransform(progress, [0, 0.7], [1, 0.6])
+  const cloudsY = useTransform(progress, [0, 1], [0, -60])
 
-  const flagPositions = buildStringPositions(SKILLS.length, FLAG_LINE.y0, FLAG_LINE.yc, FLAG_LINE.y2)
-  const bulbPositions = buildStringPositions(HOBBIES.length, BULB_LINE.y0, BULB_LINE.yc, BULB_LINE.y2-2)
+  // Ten pennants won't fit legibly on one phone-width string, so split them
+  // across two strings there.
+  const narrow = useMediaQuery('(max-width: 600px)')
+  const half = Math.ceil(SKILLS.length / 2)
+  const flagRows = narrow
+    ? [
+        { skills: SKILLS.slice(0, half), offset: 0 },
+        { skills: SKILLS.slice(half), offset: half },
+      ]
+    : [{ skills: SKILLS, offset: 0 }]
 
   return (
     <section className="scene bunting-scene" ref={ref} id="skills">
       <motion.div className="scene-sky" style={{ background: sky }} />
+      <div className="bunting-haze" />
 
-      <motion.div className="cloud-layer" style={{ opacity: cloudsOpacity }}>
+      <motion.div className="cloud-layer" style={{ opacity: cloudsOpacity, y: cloudsY }}>
         {BUNTING_CLOUDS.map((c, i) => (
           <span
             key={i}
-            className="cloud"
+            className="soft-cloud"
             style={{
               top: `${c.top}%`,
               left: `${c.left}%`,
-              '--cloud-scale': c.scale,
+              width: c.width,
+              opacity: 0.55 + c.depth * 0.45,
+              filter: `blur(${(1 - c.depth) * 3 + 2.5}px)`,
               animationDuration: `${c.duration}s`,
-              animationDelay: `${c.delay}s`,
+              animationDelay: `-${c.delay}s`,
             }}
-          />
+          >
+            <i className="puff puff-base" />
+            <i className="puff puff-1" />
+            <i className="puff puff-2" />
+            <i className="puff puff-3" />
+          </span>
         ))}
       </motion.div>
 
       <h2 className="bunting-heading">SKILLS</h2>
 
-      <div className="garland flag-garland">
-        <svg className="garland-string" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <path
-            d={`M 1 ${FLAG_LINE.y0} L 95 ${FLAG_LINE.y2}`}
-            vectorEffect="non-scaling-stroke"
-          />
-        </svg>
-
-        {SKILLS.map((s, i) => {
-          const pos = flagPositions[i]
-          return (
-            <motion.div
-              key={s}
-              className="flag-slot"
-              style={{ left: `${pos.left}%`, top: `${pos.top}%` }}
-              initial={{ opacity: 0, y: -18, scale: 0.6 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ delay: i * 0.05, type: 'spring', stiffness: 190, damping: 15 }}
-            >
-              <div
-                className="flag"
-                style={{
-                  background: SKILL_COLORS[i % SKILL_COLORS.length],
-                  animationDelay: `${(i % 6) * 0.35}s`,
-                }}
-              >
-                <span className="flag-label">{s}</span>
-              </div>
-            </motion.div>
-          )
-        })}
-      </div>
+      {flagRows.map(({ skills, offset }, row) => (
+        <Garland key={row} className="flag-garland" line={FLAG_LINE} count={skills.length}>
+          {geo => {
+            const w = Math.max(40, Math.min(100, geo.spacing * 0.9))
+            return skills.map((s, j) => {
+              const i = offset + j
+              const p = geo.items[j]
+              return (
+                <div
+                  key={s}
+                  className="flag-slot"
+                  style={{ left: p.x, top: p.y, width: w, transform: `translateX(-50%) rotate(${p.angle}deg)` }}
+                >
+                  <motion.div
+                    className="flag-drop"
+                    style={{ originY: 0 }}
+                    initial={{ opacity: 0, scaleY: 0 }}
+                    whileInView={{ opacity: 1, scaleY: 1 }}
+                    viewport={{ once: true, amount: 0.4 }}
+                    transition={{ delay: j * 0.06, type: 'spring', stiffness: 160, damping: 14 }}
+                  >
+                    <div
+                      className="flag"
+                      style={{
+                        '--flag-color': SKILL_COLORS[i % SKILL_COLORS.length],
+                        height: w * 1.08,
+                        fontSize: Math.max(8, Math.min(12.5, w / 7.6)),
+                        animationDelay: `${-(i % 5) * 0.6}s`,
+                      }}
+                    >
+                      <span className="flag-label">{s}</span>
+                    </div>
+                  </motion.div>
+                </div>
+              )
+            })
+          }}
+        </Garland>
+      ))}
 
       <h2 className="bunting-heading hobbies-heading">BEYOND CODE</h2>
 
-      <div className="garland bulb-garland">
-        <svg className="garland-string" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <path
-            d={`M 0 ${BULB_LINE.y0} L 95 ${BULB_LINE.y2}`}
-            vectorEffect="non-scaling-stroke"
-          />
-        </svg>
-
-        {HOBBIES.map((h, i) => {
-          const pos = bulbPositions[i]
-          return (
-            <motion.div
-              key={h}
-              className="bulb-slot"
-              style={{ left: `${pos.left}%`, top: `${pos.top}%` }}
-              initial={{ opacity: 0, scale: 0 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, amount: 0.5 }}
-              transition={{ delay: i * 0.07, type: 'spring', stiffness: 210, damping: 16 }}
-            >
-              <span className="bulb-socket" />
+      <Garland className="bulb-garland" line={BULB_LINE} count={HOBBIES.length}>
+        {geo => {
+          const size = Math.max(46, Math.min(94, geo.spacing * 0.8))
+          return HOBBIES.map((h, i) => {
+            const p = geo.items[i]
+            const color = HOBBY_COLORS[i % HOBBY_COLORS.length]
+            return (
               <div
-                className="bulb"
+                key={h}
+                className="bulb-slot"
                 style={{
-                  background: HOBBY_COLORS[i % HOBBY_COLORS.length],
-                  animationDelay: `${(i % 4) * 0.5}s`,
+                  left: p.x,
+                  top: p.y,
+                  '--bulb-size': `${size}px`,
+                  '--bulb-color': color,
+                  '--bulb-halo': hexToRgba(color, 0.45),
                 }}
               >
-                <span className="bulb-glow" />
-                <span className="bulb-label">{h}</span>
+                <motion.div
+                  className="bulb-drop"
+                  style={{ originY: 0 }}
+                  initial={{ opacity: 0, scale: 0 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true, amount: 0.5 }}
+                  transition={{ delay: i * 0.07, type: 'spring', stiffness: 200, damping: 15 }}
+                >
+                  <span className="bulb-halo" style={{ animationDelay: `${-(i % 4) * 0.9}s` }} />
+                  <span className="bulb-wire" />
+                  <span className="bulb-socket" />
+                  <div className="bulb" style={{ animationDelay: `${-(i % 4) * 0.9}s` }}>
+                    <span className="bulb-label" style={{ fontSize: Math.max(9, Math.min(13, size / 7.2)) }}>
+                      {h}
+                    </span>
+                  </div>
+                </motion.div>
               </div>
-            </motion.div>
-          )
-        })}
-      </div>
+            )
+          })
+        }}
+      </Garland>
     </section>
   )
 }

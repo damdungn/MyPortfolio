@@ -1,0 +1,196 @@
+/* src/styles/Game.css */
+
+/* ============ FIXED MUSHROOM FIELD BACKGROUND (mirrors the Home hero) ============ */
+.game-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.game-sky {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #cfe8d8 0%, #f3efe0 100%);
+}
+
+.game-hills {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.game-hills svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.game-hills.far { height: 300px; z-index: 1; }
+.game-hills.far svg path { fill: #a0c29b; opacity: 0.7; }
+.game-hills.mid { height: 260px; z-index: 2; }
+.game-hills.mid svg path { fill: #8fb08a; opacity: 0.85; }
+.game-hills.near { height: 220px; z-index: 3; }
+.game-hills.near svg path { fill: #4f7a52; opacity: 0.95; }
+
+.game-treeline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 140px;
+  z-index: 4;
+}
+.game-tree {
+  position: absolute;
+  bottom: 0;
+  width: 26px;
+  background: #345e42;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.game-fog {
+  position: absolute;
+  left: -20%;
+  right: -20%;
+  bottom: 66px;
+  height: 60px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  filter: blur(8px);
+  z-index: 5;
+}
+
+.game-mushroom-row {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 130px;
+  z-index: 6;
+}
+.game-mushroom {
+  position: absolute;
+  bottom: 0;
+  width: 60px;
+  height: 90px;
+  transform-origin: bottom center;
+}
+.game-mushroom .stem {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 14px;
+  height: 36px;
+  margin-left: -7px;
+  background: #f4ebd9;
+  border-radius: 4px 4px 2px 2px;
+}
+.game-mushroom .cap {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  width: 56px;
+  height: 32px;
+  margin-left: -28px;
+  border-radius: 50% 50% 8px 8px / 70% 70% 20% 20%;
+}
+.game-mushroom.fly-agaric .cap { background: #d9432e; }
+.game-mushroom.brown .cap { background: #8a5a3c; }
+.game-mushroom.tan .cap { background: #c69a6d; }
+.game-mushroom .dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff;
+}
+.game-mushroom .dot.d1 { top: 6px; left: 12px; }
+.game-mushroom .dot.d2 { top: 3px; left: 26px; }
+.game-mushroom .dot.d3 { top: 8px; left: 40px; }
+
+/* ============ PAGE CONTENT (scrolls over the fixed background) ============ */
+.game-page {
+  position: relative;
+  z-index: 10;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 100px 24px 160px;
+}
+
+.game-header {
+  margin-bottom: 40px;
+  padding: 32px 36px;
+}
+
+.game-header h1 {
+  font-size: clamp(32px, 6vw, 52px);
+  font-weight: 800;
+  color: #0f2417;
+  line-height: 1.1;
+}
+
+.game-section-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #345e42;
+  margin-bottom: 8px;
+}
+
+.game-subtitle {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #4f7a52;
+}
+
+/* Long rectangular blocks — three stacked fill one screen */
+.game-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.game-block {
+  min-height: calc((100vh - 140px) / 3);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px 32px;
+  background: rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(14px);
+  border-radius: 18px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+  transition: box-shadow 0.25s;
+}
+
+.game-block:hover {
+  box-shadow: 0 24px 60px rgba(15, 36, 23, 0.32);
+}
+
+.game-block--playable {
+  min-height: clamp(380px, 58vh, 540px);
+  justify-content: flex-start;
+  padding: 18px 24px 14px;
+}
+
+.game-title {
+  font-size: 23px;
+  font-weight: 700;
+  color: #0f3e21;
+}
+
+.game-description {
+  font-size: 14px;
+  color: #2b3d30;
+  line-height: 1.55;
+}
+
+@media (max-width: 700px) {
+  .game-mushroom { width: 46px; }
+  .game-header { padding: 24px 22px; }
+  .game-block { padding: 20px 22px; }
+}

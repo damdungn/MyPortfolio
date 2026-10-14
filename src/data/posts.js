@@ -16,8 +16,17 @@ import mila from '../../public/mila.JPG'
 import logos from '../../logos/logo-removebg.png'
 
 export const posts = [
-  {
+    {
     id: 1,
+    title: "My first Co-op work term as Research Assistant at SMART Mapping UA Lab",
+    date: "2026-09-01",
+    content: [
+      { type: 'p', value: "I am excited to share my new role as a ==Co-op Research Assistant== at **SMART Mapping UA Lab** (Faculty of Engineering, University of Alberta)!" },
+      { type: 'p', value: "My main responsibilities include supporting the processing and segmentation of large-scale **mobile LiDAR point clouds** to extract critical urban infrastructure features and perform data annotation and quality checks on 3D spatial data pipelines, and build object detection workflows that combine 2D imagery with 3D point clouds to improve semantic segmentation." },
+    ],
+  },
+  {
+    id: 2,
     title: "Demo Day at AI4Good Lab 2026 and we won the Accelerator Award!",
     date: "2026-06-23",
     content: [
@@ -34,7 +43,7 @@ export const posts = [
     images: [win, mila, cohort],
   },
   {
-    id: 2,
+    id: 3,
     title: "A visit to Google Deepmind in Montreal, Canada",
     date: "2026-06-22",
     content: [
@@ -44,7 +53,7 @@ export const posts = [
     images: [google, me, team],
   },
   {
-    id: 3,
+    id: 4,
     title: "My first 2 weeks working on Food Bank Project (We achieved a lot in just 2 weeks!)",
     date: "2026-06-14",
     content: [
@@ -63,7 +72,7 @@ export const posts = [
     images: [feeds, logos],
   },
   {
-    id: 4,
+    id: 5,
     title: "My First 4 weeks at AI4Good Lab as a Research Alumni",
     date: "2026-06-07",
     content: [
@@ -79,7 +88,7 @@ export const posts = [
     images: [proj3, proj1, proj2, proj4],
   },
   {
-    id: 5,
+    id: 6,
     title: "My First Experience at UpperBound 2026",
     date: "2026-05-22",
     content: [
@@ -93,7 +102,7 @@ export const posts = [
     images: [upper, upper2, upper3],
   },
   {
-    id: 6,
+    id: 7,
     title: "My First Experience as an researcher at UR2PHD under the supervision of Professor Barbosa",
     date: "2025-12-22",
     content: [

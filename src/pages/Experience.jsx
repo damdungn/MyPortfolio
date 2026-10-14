@@ -29,7 +29,7 @@ const ACADEMIC = [
     role: 'Teaching Assistant — CMPUT 204',
     org: 'University of Alberta',
     url: 'https://apps.ualberta.ca/catalogue/course/cmput/204',
-    date: 'Jan 2026 – Apr 2026',
+    date: 'Jan. 2026 – Apr. 2026',
     details: [
       'Led weekly lab sections for students in Algorithms I.',
       'Designed practice problems, graded assignments, and held weekly office hours.',
@@ -40,7 +40,7 @@ const ACADEMIC = [
     role: 'Undergraduate Researcher',
     org: 'UR2PhD',
     url: 'https://cra.org/ur2phd/',
-    date: 'Sep 2025 – Dec 2025',
+    date: 'Sep. 2025 – Dec. 2025',
     details: [
       'Built a Python evaluation framework in a 2-person Agile team to benchmark GPT-4 and LLaMA on 3,000+ Spider SQL tasks by injecting controlled syntactic and semantic errors to test model self-correction.',
       'Found a consistent 6–9 point accuracy gap between syntactic correction (85%–87%) and semantic correction (76%–81%), showing that LLMs recover surface-level errors more reliably than logic errors and tend to over-correct rather than understand the true semantics.',
@@ -51,7 +51,7 @@ const ACADEMIC = [
     role: 'Tutor',
     org: 'Student Union, University of Alberta',
     url: 'https://www2.su.ualberta.ca/services/infolink/tutor/registry/',
-    date: 'Jan 2026 – Present',
+    date: 'Jan. 2026 – Present',
     details: [
       'Provide one-on-one tutoring for undergraduate students across computing science, statistics and mathematics courses.',
       'Help students build intuition for algorithms, data structures, and software design.',
@@ -85,7 +85,7 @@ const VOLUNTEER = [
     role: 'Computer Science TA',
     org: 'TeamUp Science',
     url: null,
-    date: 'Feb 2026',
+    date: 'Feb. 2026',
     details: [
       'Volunteer TA for the Interdisciplinary Science Competition (ISC) hosted by TeamUP Science.',
       'Assisted high school teams with coding challenges and provided guidance on their solutions.',
@@ -98,7 +98,7 @@ const PARTTIME = [
     role: 'Bubble Tea Barista',
     org: 'Kung Fu Tea, Edmonton',
     url: null,
-    date: 'Feb 2024 – Present',
+    date: 'Feb. 2024 – Sep. 2026',
     details: [
       'Prepared a high volume of customised drinks while maintaining quality and consistency.',
       'Trained new staff on recipes, hygiene standards, and POS operation.',

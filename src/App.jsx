@@ -6,6 +6,7 @@ import Projects from './pages/Projects'
 import Blog from './pages/Blog'
 import Experience from './pages/Experience'
 import Resume from './pages/Resume'
+import Game from './pages/Game'
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/blog" element={<Blog />} />
         <Route path="/experience" element={<Experience />} />
         <Route path="/resume" element={<Resume />} />
+        <Route path="/game" element={<Game />} />
       </Routes>
     </HashRouter>
   )

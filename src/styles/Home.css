@@ -799,105 +799,196 @@ html {
   width: 100%;
   height: 100%;
   overflow: visible;
+  pointer-events: none;
+  /* String sits on top so the flags read as folded over it */
+  z-index: 2;
+  filter: drop-shadow(0 3px 2px rgba(14, 38, 56, 0.22));
 }
 .garland-string path {
   fill: none;
-  stroke: #16232b;
+  stroke: #1d2a33;
   stroke-width: 2;
   stroke-linecap: round;
 }
 
+/* ── Dreamy sky: bright haze + soft volumetric clouds ── */
+.bunting-haze {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 40% at 82% 6%, rgba(255, 255, 255, 0.75), transparent 70%),
+    radial-gradient(ellipse 70% 45% at 10% 100%, rgba(255, 246, 252, 0.6), transparent 70%),
+    radial-gradient(ellipse 50% 30% at 50% 55%, rgba(255, 255, 255, 0.25), transparent 70%);
+}
+
+.soft-cloud {
+  position: absolute;
+  aspect-ratio: 2.6;
+  animation: soft-cloud-drift 32s ease-in-out infinite;
+}
+.soft-cloud .puff {
+  position: absolute;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  /* Bright top, faintly blue-grey underside, feathered edge */
+  background: radial-gradient(
+    circle at 50% 38%,
+    #ffffff 0%,
+    #ffffff 38%,
+    rgba(242, 247, 252, 0.9) 46%,
+    rgba(220, 234, 246, 0.5) 58%,
+    rgba(220, 234, 246, 0) 70%
+  );
+}
+.soft-cloud .puff-base {
+  aspect-ratio: auto;
+  left: 2%;
+  right: 2%;
+  bottom: 0;
+  height: 46%;
+  border-radius: 999px;
+  background: radial-gradient(
+    ellipse at 50% 30%,
+    #ffffff 0%,
+    rgba(236, 244, 251, 0.95) 45%,
+    rgba(205, 222, 238, 0.5) 62%,
+    rgba(205, 222, 238, 0) 72%
+  );
+}
+.soft-cloud .puff-1 { left: 4%; bottom: -2%; width: 46%; }
+.soft-cloud .puff-2 { left: 24%; bottom: 6%; width: 56%; }
+.soft-cloud .puff-3 { left: 52%; bottom: -4%; width: 44%; }
+@keyframes soft-cloud-drift {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(48px); }
+}
+
 /* ── Pennant flags (Skills) ── */
+/* The slot is placed and rotated (inline) so its top edge lies on the
+   string's tangent; everything inside pivots on that top edge. */
 .flag-slot {
   position: absolute;
-  transform: translateX(-50%);
-  width: 96px;
+  transform-origin: top center;
+}
+.flag-drop {
+  filter: drop-shadow(0 5px 4px rgba(16, 40, 60, 0.12));
 }
 .flag {
   width: 100%;
-  min-height: 96px;
   clip-path: polygon(0 0, 100% 0, 50% 100%);
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding-top: 14px;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+  padding-top: 0.95em;
+  /* flat cloth with a simple folded hem where it wraps the string */
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.14) 0, rgba(0, 0, 0, 0.14) 5px, transparent 5px),
+    var(--flag-color);
   transform-origin: top center;
-  animation-name: flag-sway;
-  animation-duration: 3.2s;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
+  animation: flag-flutter 3.4s ease-in-out infinite;
 }
-@keyframes flag-sway {
-  0%, 100% { transform: rotate(-3deg); }
-  50% { transform: rotate(3deg); }
+/* Pivots only about the top edge (rotateX/skewX), so the hem never
+   leaves the string while the cloth moves in the breeze. */
+@keyframes flag-flutter {
+  0%, 100% { transform: perspective(520px) rotateX(0deg) skewX(0deg); }
+  30% { transform: perspective(520px) rotateX(16deg) skewX(-3deg); }
+  65% { transform: perspective(520px) rotateX(6deg) skewX(2.5deg); }
 }
 .flag-label {
-  font-size: 12px;
   font-weight: 700;
   color: #16232b;
   text-align: center;
-  line-height: 1.25;
-  padding: 0 6px;
+  line-height: 1.2;
+  padding: 0 7%;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  word-break: break-word;
+  overflow-wrap: break-word;
 }
+
 /* ── String-light bulbs (Beyond Code) ── */
 .bulb-slot {
   position: absolute;
   transform: translateX(-50%);
+}
+.bulb-drop {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+.bulb-wire {
+  width: 2px;
+  height: 8px;
+  background: #1d2a33;
+}
 .bulb-socket {
-  width: 20px;
-  height: 14px;
-  background: #16232b;
-  border-radius: 2px;
+  position: relative;
+  z-index: 1;
+  width: calc(var(--bulb-size) * 0.24);
+  height: calc(var(--bulb-size) * 0.17);
+  border-radius: 3px 3px 2px 2px;
+  background: #2a3640;
+}
+/* Faint pastel glow behind the bulb */
+.bulb-halo {
+  position: absolute;
+  left: 50%;
+  top: calc(8px + var(--bulb-size) * 0.17 + var(--bulb-size) / 2);
+  width: calc(var(--bulb-size) * 1.7);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--bulb-halo) 0%, transparent 68%);
+  pointer-events: none;
+  animation: bulb-halo-pulse 3.6s ease-in-out infinite;
 }
 .bulb {
   position: relative;
-  width: 96px;
-  height: 96px;
-  border-radius: 50%;
-  margin-top: -2px;
+  width: var(--bulb-size);
+  height: var(--bulb-size);
+  margin-top: -3px;
+  border-radius: 50% 50% 50% 50% / 46% 46% 54% 54%;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 0 14px;
-  box-shadow: 0 8px 16px rgb(253, 251, 251);
-  animation-name: bulb-glow-pulse;
-  animation-duration: 3.6s;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
+  padding: 0 12%;
+  background: var(--bulb-color);
+  box-shadow: 0 6px 10px rgba(16, 40, 60, 0.12);
 }
-.bulb-glow {
+/* Simple cartoon highlight */
+.bulb::before {
+  content: '';
   position: absolute;
-  bottom: -30px;
-  left: 50%;
-  width: 130px;
-  height: 60px;
-  margin-left: -65px;
-  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.85), transparent 72%);
-  filter: blur(3px);
-  pointer-events: none;
-  z-index: -1;
+  top: 16%;
+  left: 22%;
+  width: 16%;
+  height: 10%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.75);
+  transform: rotate(-30deg);
 }
-@keyframes bulb-glow-pulse {
-  0%, 100% { box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15), 0 0 18px 4px rgba(255, 255, 255, 0.25); }
-  50% { box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15), 0 0 28px 10px rgba(255, 255, 255, 0.5); }
+@keyframes bulb-halo-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
 }
 .bulb-label {
   position: relative;
-  font-size: 13px;
   font-weight: 700;
   color: #16232b;
   line-height: 1.2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flag,
+  .bulb-halo,
+  .soft-cloud {
+    animation: none;
+  }
 }
 
 /* ============ MOBILE ============ */
@@ -920,23 +1011,6 @@ html {
   }
   .bulb-garland {
     height: 190px;
-  }
-  .flag-slot {
-    width: 58px;
-  }
-  .flag {
-    height: 84px;
-    padding-top: 10px;
-  }
-  .flag-label {
-    font-size: 10px;
-  }
-  .bulb {
-    width: 72px;
-    height: 72px;
-  }
-  .bulb-label {
-    font-size: 11px;
   }
 }
 
@@ -971,28 +1045,5 @@ html {
   }
   .bulb-garland {
     height: 170px;
-  }
-  .flag-slot {
-    width: 46px;
-  }
-  .flag {
-    height: 66px;
-    padding-top: 8px;
-  }
-  .flag-label {
-    font-size: 9px;
-  }
-  .bulb {
-    width: 56px;
-    height: 56px;
-  }
-  .bulb-label {
-    font-size: 9px;
-  }
-  .bulb-glow {
-    width: 90px;
-    height: 44px;
-    margin-left: -45px;
-    bottom: -20px;
   }
 }
